@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875127063444",
+    "firebase_url": "https://crs1-ae1ae-default-rtdb.firebaseio.com",
+    "project_id": "crs1-ae1ae",
+    "storage_bucket": "crs1-ae1ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875127063444:android:52a2c6a32d7a3ca9a10581",
+        "android_client_info": {
+          "package_name": "com.crs.crs_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875127063444-oov77ctmobpj5qupcdvk30pu6bnjfh6k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8ZaESzpyiq3Z01QFjR1mITOaO_tN-iJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875127063444-oov77ctmobpj5qupcdvk30pu6bnjfh6k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
