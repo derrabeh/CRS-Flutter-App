@@ -27,9 +27,13 @@ class LoginPage extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.all(20),
+
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
+
+
             TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -54,6 +58,7 @@ class LoginPage extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
+            
             IntrinsicWidth(
               stepWidth: double.infinity,
               child: ElevatedButton(
@@ -86,18 +91,38 @@ class LoginPage extends StatelessWidget {
                 },
               ),
             ),
-            TextButton(
-              child: Text(
-                'Sign Up',
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: Colors.blue[700],
+
+            IntrinsicWidth(
+              stepWidth: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: ElevatedButton(
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text('Sign Up'),
+                  ),
+                  onPressed: () async{
+                    Navigator.pushNamed(context, SignUpPage.routeName);
+
+
+                    }
+
                 ),
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, SignUpPage.routeName);
-              },
-            )
+            ),
+            // TextButton(
+            //   child: Text(
+            //     'Sign Up',
+            //     style: TextStyle(
+            //       decoration: TextDecoration.underline,
+            //       color: Colors.blue[700],
+            //     ),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.pushNamed(context, SignUpPage.routeName);
+            //   },
+            // )
           ],
         ),
       ),
