@@ -3,7 +3,6 @@ import 'package:crs_system/pages/document_detail_page.dart';
 import 'package:crs_system/pages/manage_profile_page.dart';
 import 'package:crs_system/pages/document_add_page.dart';
 import 'package:crs_system/pages/signup_page.dart';
-import 'package:crs_system/pages/trip_add_page.dart';
 import 'package:crs_system/pages/volunteer_page.dart';
 import 'package:crs_system/pages/volunteer_document_page.dart';
 import 'package:crs_system/providers/application_provider.dart';

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   static const String routeName = '/';
+  //static const String routeName = 'SignUp-Page';
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
