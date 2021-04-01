@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'package:crs_system/models/application.dart';
+import 'package:crs_system/models/user.dart';
+import 'package:crs_system/models/volunteer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:crs_app/models/document.dart';
-import 'package:crs_app/models/application.dart';
-import 'package:crs_app/models/user.dart';
-
+import 'package:crs_system/models/document.dart';
 
 class ApplicationProvider with ChangeNotifier {
   List<Application> _applicationList = [];
-  User currentUser;
 
 
   List<Application> get applicationList{
@@ -21,6 +20,60 @@ class ApplicationProvider with ChangeNotifier {
 
   Application findById(String id){
     return _applicationList.firstWhere((application) => application.applicationID == id);
+  }
+
+  Volunteer currentVolunteer;
+  //volunteerID is application volunteerID
+  //this function is to set the current volunteer
+  Future<void> getVolunteerFromApplicationVolunteerID(String volunteerID) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers.json';
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if(extractedData.length>0) {
+        extractedData.forEach((volunteerID,volunteerData) {
+          Volunteer newVolunteer = Volunteer(
+            volunteerId: volunteerID,
+            userId: volunteerData['userId'],
+          );
+          if(newVolunteer.volunteerId==volunteerID){
+            currentVolunteer = newVolunteer;
+          }
+        });
+        notifyListeners();
+      }
+    }catch(error){
+      print(error);
+    }
+  }
+
+  User currentUser;
+  //this function is using currentVolunteer to set the currentUser
+  //userID is currentUser.userID
+  Future<void> getUserFromVolunteer(String userID) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if(extractedData.length>0) {
+        extractedData.forEach((userID,userData) {
+          User newUser = User(
+            id: userID,
+            username: userData['username'],
+            password: userData['password'],
+            email: userData['email'],
+            address: userData['address'],
+            phone: userData['phone'],
+          );
+          if(newUser.id == userID){
+            currentUser = newUser;
+          }
+        });
+        notifyListeners();
+      }
+    }catch(error){
+      print(error);
+    }
   }
 
   Future<void> getAllApplication() async{
@@ -36,7 +89,8 @@ class ApplicationProvider with ChangeNotifier {
               applicationDate : applicationData['applicationDate'],
               status: applicationData['status'],
               remarks: applicationData['remarks'],
-              volunteerID: applicationData['volunteerID']
+              volunteerID: applicationData['volunteerID'],
+              tripID: applicationData['tripID'],
           );
           loadingApplication.add(newApplication);
         });
@@ -56,7 +110,8 @@ class ApplicationProvider with ChangeNotifier {
             'applicationDate': application.applicationDate,
             'status' : application.status,
             'remarks' : application.remarks,
-            'volunteerID' : application.volunteerID
+            'volunteerID' : application.volunteerID,
+            'tripID' : application.tripID,
           }));
       final newApplication = Application(
           applicationID: json.decode(response.body)['name'],
@@ -80,7 +135,8 @@ class ApplicationProvider with ChangeNotifier {
             'applicationDate': application.applicationDate,
             'status' : application.status,
             'remarks' : application.remarks,
-            'volunteerID' : application.volunteerID
+            'volunteerID' : application.volunteerID,
+            'tripID' : application.tripID
           }));
       _applicationList[applicationIndex] = application;
       notifyListeners();
