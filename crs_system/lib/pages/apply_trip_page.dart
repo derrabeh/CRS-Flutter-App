@@ -25,7 +25,13 @@ class _ApplyTripState extends State<ApplyTripPage> {
   void didChangeDependencies() {
     if(isInit){
       setState(() {
-        //get all trip
+        Provider.of<TripProvider>(context)
+            .getAllTripForApply()
+            .then((value) {
+          setState(() {
+            isInit = false;
+          });
+        });
       });
     }
     isInit = false;
