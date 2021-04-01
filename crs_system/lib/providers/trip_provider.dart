@@ -51,6 +51,37 @@ class TripProvider with ChangeNotifier {
     }
   }
 
+  //get all
+  Future<void> getAllTripForApply() async {
+    //firebase link/trips(is table name).json
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/trips.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Trip> loadingTrip = [];
+      if (extractedData.length > 0) {
+        extractedData.forEach((tripID, tripData) {
+          Trip newTrip = Trip(
+              tripID: tripID,
+              description: tripData['description'],
+              crisisType: tripData['crisisType'],
+              tripDate: tripData['tripDate'],
+              location: tripData['location'],
+              numVolunteer: tripData['numVolunteer'],
+              userId: tripData['userId']
+          );
+          if (newTrip.numVolunteer != 0) {
+            loadingTrip.add(newTrip);
+          }
+        });
+        _tripList = loadingTrip;
+        notifyListeners();
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
   //add method
   Future<void> addTrip(Trip trip) async {
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/trips.json';
