@@ -1,6 +1,7 @@
 import 'package:crs_system/models/user.dart';
 import 'package:crs_system/pages/document_add_page.dart';
 import 'package:crs_system/pages/volunteer_document_page.dart';
+import 'package:crs_system/providers/application_provider.dart';
 import 'package:crs_system/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ class ManageProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
+    ApplicationProvider a = Provider.of<ApplicationProvider>(context);
     User newUser = userProvider.currentUser;
     TextEditingController usernameController = TextEditingController(text:newUser.username);
     TextEditingController passwordController = TextEditingController(text:newUser.password);
@@ -127,6 +129,7 @@ class ManageProfilePage extends StatelessWidget {
                         phone: phoneController.text,
                         email: emailController.text,
                         address: addressController.text,
+                        userType: 'Volunteer'
                       );
                       await userProvider.updateUser(newUser);
                       userProvider.currentUser = newUser;

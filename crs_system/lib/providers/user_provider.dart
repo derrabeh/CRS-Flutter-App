@@ -65,6 +65,7 @@ class UserProvider with ChangeNotifier {
             'address' : user.address,
             'name' : user.name,
             'phone' : user.phone,
+            'userType' : user.userType
           }));
       final newUser = User(
         id: json.decode(response.body)['name'],
@@ -74,6 +75,7 @@ class UserProvider with ChangeNotifier {
         address: user.address,
         name: user.name,
         phone: user.phone,
+        userType: user.userType
       );
       currentUser = newUser;
       notifyListeners();
@@ -98,6 +100,7 @@ class UserProvider with ChangeNotifier {
             'address' : user.address,
             'name' : user.name,
             'phone' : user.phone,
+            'userType' : user.userType
           }));
       notifyListeners();
     }catch(error){

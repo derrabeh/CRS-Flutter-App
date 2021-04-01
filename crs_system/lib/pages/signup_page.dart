@@ -113,6 +113,7 @@ class SignUpPage extends StatelessWidget {
                         phone: phoneController.text,
                         email: emailController.text,
                         address: addressController.text,
+                        userType: 'Volunteer',
                       );
                       final isUserExist = await userProvider.isUserExist(usernameController.text);
                       if(isUserExist == false){

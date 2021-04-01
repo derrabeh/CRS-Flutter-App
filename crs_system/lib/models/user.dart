@@ -9,6 +9,7 @@ class User extends ChangeNotifier{
   final String email;
   final String phone;
   final String address;
+  final String userType;
 
   User({
     this.id,
@@ -18,6 +19,7 @@ class User extends ChangeNotifier{
     @required this.email,
     @required this.phone,
     @required this.address,
+    @required this.userType
   });
 
 }
