@@ -8,12 +8,14 @@ class Application extends ChangeNotifier{
   final String status;
   final String remarks;
   final String volunteerID;
+  final String tripID;
 
   Application({
     this.applicationID,
     @required this.applicationDate,
     @required this.status,
     this.remarks,
-    this.volunteerID
+    this.volunteerID,
+    @required this.tripID,
   });
 }

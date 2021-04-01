@@ -35,7 +35,8 @@ class ApplicationProvider with ChangeNotifier {
               applicationDate : applicationData['applicationDate'],
               status: applicationData['status'],
               remarks: applicationData['remarks'],
-              volunteerID: applicationData['volunteerID']
+              volunteerID: applicationData['volunteerID'],
+              tripID: applicationData['tripID'],
           );
           loadingApplication.add(newApplication);
         });
@@ -55,7 +56,8 @@ class ApplicationProvider with ChangeNotifier {
             'applicationDate': application.applicationDate,
             'status' : application.status,
             'remarks' : application.remarks,
-            'volunteerID' : application.volunteerID
+            'volunteerID' : application.volunteerID,
+            'tripID' : application.tripID,
           }));
       final newApplication = Application(
           applicationID: json.decode(response.body)['name'],
@@ -79,7 +81,8 @@ class ApplicationProvider with ChangeNotifier {
             'applicationDate': application.applicationDate,
             'status' : application.status,
             'remarks' : application.remarks,
-            'volunteerID' : application.volunteerID
+            'volunteerID' : application.volunteerID,
+            'tripID' : application.tripID
           }));
       _applicationList[applicationIndex] = application;
       notifyListeners();

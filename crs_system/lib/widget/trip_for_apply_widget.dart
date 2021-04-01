@@ -40,7 +40,8 @@ class TripWidget extends StatelessWidget {
                 applicationDate: date,
                 status: 'NEW',
                 remarks: '',
-                volunteerID: newVolunteer.volunteerId
+                volunteerID: newVolunteer.volunteerId,
+                tripID: trip.tripID,
               );
               applicationProvider.addApplication(newApplication);
               ScaffoldMessenger.of(context).showSnackBar(
@@ -68,7 +69,8 @@ class TripWidget extends StatelessWidget {
                        applicationDate: date,
                        status: 'NEW',
                        remarks: '',
-                        volunteerID: newVolunteer.volunteerId
+                      volunteerID: newVolunteer.volunteerId,
+                      tripID: trip.tripID,
                     );
                     applicationProvider.addApplication(newApplication);
                     Navigator.pop(context);
