@@ -1,3 +1,4 @@
+import 'package:crs_system/pages/document_detail_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +34,10 @@ class DocumentWidget extends StatelessWidget {
               documentProvider.deleteDocument(document.documentID);
             },
           ),
+          onTap: (){
+            Navigator.pushNamed(context, ManageDocumentPage.routeName,
+                arguments:document.documentID);
+          },
         ),
       ),
       direction: DismissDirection.endToStart,
