@@ -22,10 +22,11 @@ class ApplicationProvider with ChangeNotifier {
     return _applicationList.firstWhere((application) => application.applicationID == id);
   }
 
+  
   Volunteer currentVolunteer;
   //volunteerID is application volunteerID
   //this function is to set the current volunteer
-  Future<void> getVolunteerFromApplicationVolunteerID(String volunteerID) async{
+  Future<Volunteer> getVolunteerFromApplicationVolunteerID(String volunteerID) async{
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers.json';
     try{
       final response = await http.get(url);
@@ -42,6 +43,7 @@ class ApplicationProvider with ChangeNotifier {
         });
         notifyListeners();
       }
+      return currentVolunteer;
     }catch(error){
       print(error);
     }

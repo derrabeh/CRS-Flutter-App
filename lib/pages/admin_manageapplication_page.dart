@@ -16,14 +16,16 @@ class ManageApplicationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     String id = ModalRoute.of(context).settings.arguments;
     final applicationProvider = Provider.of<ApplicationProvider>(context);
-    final volunteerProvider = Provider.of<VolunteerProvider>(context);
 
     Application newApplication = applicationProvider.findById(id);
-    Volunteer newVolunteer = applicationProvider.getVolunteerFromApplicationVolunteerID(newApplication.volunteerID);
-    User newUser = applicationProvider.getUserFromVolunteer(newVolunteer.userId);
+    final newVolunteer = applicationProvider.getVolunteerFromApplicationVolunteerID(newApplication.volunteerID);
+    if(newVolunteer != null) {
+      applicationProvider.getUserFromVolunteer(
+          applicationProvider.currentVolunteer.userId);
+    }
 
     TextEditingController volunteerController =
-    TextEditingController(text: newVolunteer.userId.);
+    TextEditingController(text: applicationProvider.currentVolunteer.userId);
 
     TextEditingController remarksController =
     TextEditingController(text: newApplication.remarks);
