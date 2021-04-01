@@ -10,7 +10,7 @@ class Trip with ChangeNotifier{
   final String userId;
 
   Trip({
-    @required this.tripID,
+    this.tripID,
     @required this.description,
     @required this.crisisType,
     @required this.tripDate,
