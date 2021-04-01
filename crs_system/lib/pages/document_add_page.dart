@@ -56,10 +56,13 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
   }
 
   File image;
+  final picker = ImagePicker();
   selectImage() async{
-    image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
-
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+      }
     });
   }
 
@@ -142,15 +145,21 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                child: Text('Select image'),
-                onPressed: (){
-                  selectImage();
-                },
+              IntrinsicWidth(
+                stepWidth: double.infinity,
+                child: ElevatedButton(
+                  child: Text('Select image'),
+                  onPressed: (){
+                    selectImage();
+                  },
+                ),
               ),
-              image==null ? Center(
-                child: Text('Select Image'),)
-                  :Image.file(image),
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: image==null ? Center(
+                  child: Text('No Image'),)
+                    :Image.file(image),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
