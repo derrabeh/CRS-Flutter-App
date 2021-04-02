@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,7 @@ import 'package:crs_app/models/user.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
 import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/pages/admin_home_page.dart';
+
 
 class LoginPage extends StatelessWidget {
   static const String routeName = '/';
@@ -23,14 +25,35 @@ class LoginPage extends StatelessWidget {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login Page'),
+        title: Text('CRS System'),
       ),
-      body: Padding(
+      body:
+
+      Padding(
         padding: EdgeInsets.all(20),
+
 
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+           // Image.asset('assets/images/login.png'),
+            Align(
+              alignment: Alignment.center,
+
+              child: Image(
+                image: AssetImage('assets/images/login.png'),
+                fit: BoxFit.cover,
+
+                width: MediaQuery.of(context).size.width / 2,
+
+              ),
+            ),
+            SizedBox(
+              height: 40,
+            ),
+
+
+
 
 
 
@@ -52,13 +75,16 @@ class LoginPage extends StatelessWidget {
 
                 ),
                 labelText: 'Password',
+
               ),
+              obscureText: true,
               controller: passwordController,
+
             ),
             SizedBox(
               height: 20,
             ),
-            
+
             IntrinsicWidth(
               stepWidth: double.infinity,
               child: ElevatedButton(
@@ -129,3 +155,5 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
+
+
