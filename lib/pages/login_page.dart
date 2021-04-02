@@ -37,25 +37,15 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
            // Image.asset('assets/images/login.png'),
-            Align(
-              alignment: Alignment.center,
-
-              child: Image(
+             child: Image(
                 image: AssetImage('assets/images/login.png'),
                 fit: BoxFit.cover,
-
-                width: MediaQuery.of(context).size.width / 2,
-
+                width: MediaQuery.of(context).size.width / 2.2,
               ),
             ),
             SizedBox(
-              height: 40,
+              height: 10,
             ),
-
-
-
-
-
 
             TextField(
               decoration: InputDecoration(
