@@ -1,10 +1,13 @@
 import 'dart:convert';
-import 'package:crs_system/models/application.dart';
-import 'package:crs_system/models/user.dart';
-import 'package:crs_system/models/volunteer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:crs_system/models/document.dart';
+import 'package:crs_app/models/document.dart';
+import 'package:crs_app/models/application.dart';
+import 'package:crs_app/models/user.dart';
+import 'package:crs_app/models/volunteer.dart';
+import 'package:crs_app/models/user.dart';
+import 'package:crs_app/providers/user_provider.dart';
+import 'package:crs_app/models/trip.dart';
 
 class ApplicationProvider with ChangeNotifier {
   List<Application> _applicationList = [];
@@ -22,7 +25,7 @@ class ApplicationProvider with ChangeNotifier {
     return _applicationList.firstWhere((application) => application.applicationID == id);
   }
 
-  
+
   Volunteer currentVolunteer;
   //volunteerID is application volunteerID
   //this function is to set the current volunteer
@@ -87,12 +90,12 @@ class ApplicationProvider with ChangeNotifier {
       if(extractedData.length>0) {
         extractedData.forEach((applicationID,applicationData) {
           Application newApplication = Application(
-              applicationID: applicationID,
-              applicationDate : applicationData['applicationDate'],
-              status: applicationData['status'],
-              remarks: applicationData['remarks'],
-              volunteerID: applicationData['volunteerID'],
-              tripID: applicationData['tripID'],
+            applicationID: applicationID,
+            applicationDate : applicationData['applicationDate'],
+            status: applicationData['status'],
+            remarks: applicationData['remarks'],
+            volunteerID: applicationData['volunteerID'],
+            tripID: applicationData['tripID'],
           );
           loadingApplication.add(newApplication);
         });
@@ -103,6 +106,39 @@ class ApplicationProvider with ChangeNotifier {
       print(error);
     }
   }
+  Future<void> getAllApplicationForAdmin(String tripID) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/applications.json';
+
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Application> loadingApplication = [];
+      if(extractedData.length>0) {
+        extractedData.forEach((applicationID,applicationData) {
+
+          Application newApplication = Application(
+            applicationID: applicationID,
+            applicationDate : applicationData['applicationDate'],
+            status: applicationData['status'],
+            remarks: applicationData['remarks'],
+            volunteerID: applicationData['volunteerID'],
+            tripID: applicationData['tripID'],
+          );
+          if(applicationData['tripID'] == tripID ) {
+           if (applicationData['status'] == 'NEW' ||
+               applicationData['status'] == 'ACCEPTED') {
+              loadingApplication.add(newApplication);
+            }
+          }
+        });
+        _applicationList = loadingApplication;
+        notifyListeners();
+      }
+    }catch(error){
+      print(error);
+    }
+  }
+
 
   Future<Document> addApplication(Application application) async {
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/applications.json';
@@ -120,6 +156,8 @@ class ApplicationProvider with ChangeNotifier {
           applicationDate: application.applicationDate,
           status: application.status,
           remarks: application.remarks
+
+
       );
       _applicationList.add(newApplication);
       notifyListeners();
@@ -140,6 +178,11 @@ class ApplicationProvider with ChangeNotifier {
             'volunteerID' : application.volunteerID,
             'tripID' : application.tripID
           }));
+
+      //  if (application.status == 'NEW' ||
+      //      application.status == 'ACCEPTED') {
+
+
       _applicationList[applicationIndex] = application;
       notifyListeners();
     }catch(error){
