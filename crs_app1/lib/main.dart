@@ -4,6 +4,7 @@ import 'package:crs_app/pages/admin_triplist_page.dart';
 import 'package:crs_app/pages/application_document_detail_page.dart';
 import 'package:crs_app/pages/application_volunteer_document.dart';
 import 'package:crs_app/pages/document_detail_page.dart';
+import 'package:crs_app/pages/manager_page.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: LoginPage.routeName,
         routes: {
+          ManagerPage.routeName:(context) => ManagerPage(),
           TripPage.routeName: (context) => TripPage(),
           AddTripPage.routeName: (context) => AddTripPage(),
           TripDetailPage.routeName: (context) => TripDetailPage(),

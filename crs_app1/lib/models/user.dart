@@ -9,7 +9,7 @@ class User extends ChangeNotifier{
   final String email;
   final String phone;
   final String address;
-  final String userType;
+  final String userType; //volunteer, admin, manager, board directory
 
   User({
     this.id,

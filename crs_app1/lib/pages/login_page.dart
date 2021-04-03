@@ -8,16 +8,15 @@ import 'package:crs_app/pages/signup_volunteer.dart';
 import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/pages/admin_home_page.dart';
 
+import 'manager_page.dart';
+
 
 class LoginPage extends StatelessWidget {
   static const String routeName = '/';
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController userTypeController = TextEditingController();
-
  // TextEditingController userTypeController = TextEditingController();
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,16 +85,16 @@ class LoginPage extends StatelessWidget {
                       usernameController.text = '';
                       passwordController.text = '';
                       if(userProvider.currentUser.userType == 'Volunteer'){
-
                       Navigator.pushReplacementNamed(context,
                           VolunteerPage.routeName);}
+
                       else if (userProvider.currentUser.userType == 'admin'){
                         Navigator.pushReplacementNamed(context,
                             AdminHomePage.routeName);
                       }
                       else if (userProvider.currentUser.userType == 'manager'){
-                      //  Navigator.pushReplacementNamed(context,
-                       //     AdminHomePage.routeName);
+                        Navigator.pushReplacementNamed(context,
+                            ManagerPage.routeName);
                       }
                     }
                   },

@@ -8,18 +8,62 @@ import 'package:crs_app/models/user.dart';
 
 class VolunteerProvider with ChangeNotifier {
   Volunteer currentVolunteer;
+  List<Volunteer> _volunteerList = [];
+
+  //use in volunteer report page
+  List<Volunteer> get volunteerList{
+    return [... _volunteerList]; //return a clone of the list
+  }
+
+  //use in volunteer details page
+  Volunteer findById(String id_input){
+    return _volunteerList.firstWhere((vol) => vol.volunteerId == id_input);
+  }
+
+  //return all existing volunteers, use in volunteer report page
+  Future<void> getAllVolunteer() async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers.json';
+    try{
+      final response = await http.get(url);
+      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final List<Volunteer> loadingVolunteer = [];
+
+      //if there are volunteers in the database
+      if(extracted.length > 0){
+        extracted.forEach((volId, volData) {
+          Volunteer vol = Volunteer(
+            volunteerId: volId,
+            userId: volData['userId'],
+          );
+          // for each volunteer retrieved from firebase,
+          // add into local volunteer list
+          loadingVolunteer.add(vol);
+        });
+        _volunteerList = loadingVolunteer;
+        notifyListeners();
+      }
+    } catch (e){
+      print(e);
+    }
+  }
+
+  //when signing out, clear out the local volunteer lost
+  //use in manager drawer widget, sign out icon
+  void clearVolunteerList() {
+    _volunteerList = [];
+  }
 
   Future<Volunteer> getVolunteerById(String userid) async{
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers.json';
     try{
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
       if(extractedData.length>0) {
         extractedData.forEach((volunteerId,volunteerData) {
           Volunteer newVolunteer = Volunteer(
             volunteerId: volunteerId,
             userId: volunteerData['userId'],
-
 
           );
           if(newVolunteer.userId == userid) {
@@ -46,6 +90,7 @@ class VolunteerProvider with ChangeNotifier {
       );
       currentVolunteer = newVolunteer;
       notifyListeners();
+
     } catch (error) {
       print(error);
     }
