@@ -77,6 +77,7 @@ class VolunteerDetail extends StatelessWidget {
                           child: Text('Contact Volunteer'),
                           onPressed: (){
                             //insert code to contact
+                            //or can view volunteers application
                           },
                         ),
                       ),

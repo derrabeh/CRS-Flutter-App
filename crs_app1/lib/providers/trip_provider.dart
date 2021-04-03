@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 class TripProvider with ChangeNotifier {
   List<Trip> _tripList = [];
 
+
   //get to do list
   List<Trip> get tripList {
     return [..._tripList]; //the 3 dots with Clone of the list
@@ -20,7 +21,35 @@ class TripProvider with ChangeNotifier {
     return _tripList.firstWhere((trip) => trip.tripID == tripID);
   }
 
-  //get all
+  //get all trips, use in trip report
+  Future<void> getAllTrips() async {
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/trips.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Trip> loadingTrip = [];
+      if (extractedData.length > 0) {
+        extractedData.forEach((tripID, tripData) {
+          Trip newTrip = Trip(
+              tripID: tripID,
+              description: tripData['description'],
+              crisisType: tripData['crisisType'],
+              tripDate: tripData['tripDate'],
+              location: tripData['location'],
+              numVolunteer: tripData['numVolunteer'],
+              userId: tripData['userId']
+          );
+          loadingTrip.add(newTrip);
+        });
+        _tripList = loadingTrip;
+        notifyListeners();
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
+
+  //get trips by admin id
   Future<void> getAllTrip(String userId) async {
     //firebase link/trips(is table name).json
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/trips.json';
@@ -125,7 +154,6 @@ class TripProvider with ChangeNotifier {
             'tripDate': trip.tripDate,
             'location' : trip.location,
             'numVolunteer': trip.numVolunteer,
-
             'userId': trip.userId,
 
           }

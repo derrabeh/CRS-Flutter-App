@@ -6,6 +6,7 @@ import 'package:crs_app/pages/application_volunteer_document.dart';
 import 'package:crs_app/pages/document_detail_page.dart';
 import 'package:crs_app/pages/manager_page.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
+import 'package:crs_app/widget/trip_report_widget.dart';
 import 'package:crs_app/widget/volunteer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,19 +27,19 @@ import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/pages/admin_home_page.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 
-class VolunteerReport extends StatefulWidget {
-  static const String routeName = 'volunteer-report';
+class TripReport extends StatefulWidget {
+  static const String routeName = 'trip-report';
   @override
-  _VolunteerReportState createState() => _VolunteerReportState();
+  _TripReportState createState() => _TripReportState();
 }
 
-class _VolunteerReportState extends State<VolunteerReport> {
+class _TripReportState extends State<TripReport> {
   bool isInit = true;
   @override
   void didChangeDependencies() {
     if (isInit){
       setState(() {
-        Provider.of<UserProvider>(context).getAllVolunteer().then((value) {
+        Provider.of<TripProvider>(context).getAllTrips().then((value) {
           setState(() {
             isInit = false;
           });
@@ -51,21 +52,22 @@ class _VolunteerReportState extends State<VolunteerReport> {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = Provider.of<UserProvider>(context);
-    final userList = userProvider.userList;
+    final tripProvider = Provider.of<TripProvider>(context);
+    final tripList = tripProvider.tripList;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Volunteers Report'),
+        title: Text('Trips Report'),
         actions: [
           CircleAvatar(
             radius: 22,
             child: IconButton(
               icon: Icon(Icons.sort),
               onPressed: (){
-                print(userProvider.userList);
-                //sort the volunteers alphabetically
+                print(tripProvider.tripList);
+                //sort the trips by date
+
               },
             ),
           ),
@@ -73,12 +75,12 @@ class _VolunteerReportState extends State<VolunteerReport> {
         ],
       ),
       body: ListView.builder(
-        itemCount: userList.length,
+        itemCount: tripList.length,
         itemBuilder: (context, i) => ChangeNotifierProvider.value(
-          value: userList[i],
+          value: tripList[i],
           child: Column(
             children: [
-              VolunteerWidget(),
+              TripReportWidget(),
               Divider(
                 thickness: 1,
                 color: Colors.black54,

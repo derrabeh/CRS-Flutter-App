@@ -1,3 +1,4 @@
+import 'package:crs_app/pages/trip_report.dart';
 import 'package:crs_app/pages/volunteers_report.dart';
 import 'package:crs_app/widget/manager_drawer.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _ManagerPageState extends State<ManagerPage> {
             Container(
               height: 50,
               child: ElevatedButton(
-                child: Text('Manage CRS Admintrators'),
+                child: Text('Manage CRS Adminstrators'),
                 onPressed: (){
                   //Navigator.pushNamed(context, ManageAdmin.routeName);
                 },
@@ -61,7 +62,7 @@ class _ManagerPageState extends State<ManagerPage> {
               child: ElevatedButton(
                 child: Text('Generate Trips Report'),
                 onPressed: (){
-                  //Navigator.pushNamed(context, TripReport.routeName);
+                  Navigator.pushNamed(context, TripReport.routeName);
                 },
               ),
             ),
