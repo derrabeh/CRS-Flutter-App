@@ -16,35 +16,8 @@ class VolunteerProvider with ChangeNotifier {
   }
 
   //use in volunteer details page
-  Volunteer findById(String id_input){
-    return _volunteerList.firstWhere((vol) => vol.volunteerId == id_input);
-  }
-
-  //return all existing volunteers, use in volunteer report page
-  Future<void> getAllVolunteer() async{
-    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers.json';
-    try{
-      final response = await http.get(url);
-      final extracted = json.decode(response.body) as Map<String, dynamic>;
-      final List<Volunteer> loadingVolunteer = [];
-
-      //if there are volunteers in the database
-      if(extracted.length > 0){
-        extracted.forEach((volId, volData) {
-          Volunteer vol = Volunteer(
-            volunteerId: volId,
-            userId: volData['userId'],
-          );
-          // for each volunteer retrieved from firebase,
-          // add into local volunteer list
-          loadingVolunteer.add(vol);
-        });
-        _volunteerList = loadingVolunteer;
-        notifyListeners();
-      }
-    } catch (e){
-      print(e);
-    }
+  Volunteer findById(String volId){
+    return _volunteerList.firstWhere((vol) => vol.volunteerId == volId);
   }
 
   //when signing out, clear out the local volunteer lost
@@ -109,8 +82,7 @@ class VolunteerProvider with ChangeNotifier {
   }
 
   Future<void> deleteVolunteer(String id) async {
-    String url =
-        'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers/$id.json';
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/volunteers/$id.json';
     try {
       await http.delete(url);
       notifyListeners();
@@ -118,4 +90,17 @@ class VolunteerProvider with ChangeNotifier {
       print(error);
     }
   }
+
+  //delete corresponding user id from user database
+  //must use together with deleteVolunteer() function
+  Future<void> deleteVolunteerFromUser(Volunteer vol) async {
+    String url = 'https://todo-20c46-default-rtdb.firebaseio.com/users/${vol.userId}.json';
+    try {
+      await http.delete(url);
+      notifyListeners();
+    }catch(error){
+      print(error);
+    }
+  }
+
 }

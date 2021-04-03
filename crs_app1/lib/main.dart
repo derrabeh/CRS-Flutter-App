@@ -6,6 +6,8 @@ import 'package:crs_app/pages/application_volunteer_document.dart';
 import 'package:crs_app/pages/document_detail_page.dart';
 import 'package:crs_app/pages/manager_page.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
+import 'package:crs_app/pages/volunteer_detail.dart';
+import 'package:crs_app/pages/volunteers_report.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
@@ -58,6 +60,8 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: LoginPage.routeName,
         routes: {
+          VolunteerDetail.routeName:(context) => VolunteerDetail(),
+          VolunteerReport.routeName:(context) => VolunteerReport(),
           ManagerPage.routeName:(context) => ManagerPage(),
           TripPage.routeName: (context) => TripPage(),
           AddTripPage.routeName: (context) => AddTripPage(),

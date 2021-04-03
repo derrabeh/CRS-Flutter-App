@@ -1,3 +1,4 @@
+import 'package:crs_app/pages/volunteers_report.dart';
 import 'package:crs_app/widget/manager_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +37,7 @@ class _ManagerPageState extends State<ManagerPage> {
               child: ElevatedButton(
                 child: Text('Generate Volunteers Report'),
                 onPressed: (){
-                  //Navigator.pushNamed(context, VolunteerReport.routeName);
+                  Navigator.pushNamed(context, VolunteerReport.routeName);
                 },
               ),
             ),

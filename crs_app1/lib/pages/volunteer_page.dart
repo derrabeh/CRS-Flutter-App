@@ -35,6 +35,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
+
     return  Scaffold(
       appBar: AppBar(
         title: Text('Volunteer Page'),

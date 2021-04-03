@@ -5,6 +5,82 @@ import 'package:http/http.dart' as http;
 
 class UserProvider with ChangeNotifier {
   User currentUser;
+  List<User> _userList = [];
+
+  List<User> get userList{
+    return [... _userList]; //return a clone of the list
+  }
+
+  User findById(String uid){
+    return _userList.firstWhere((user) => user.id == uid);
+  }
+
+  void clearUserList() {
+    _userList = [];
+  }
+
+  //use in volunteer report
+  Future<void> getAllVolunteer() async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
+    try{
+      final response = await http.get(url);
+      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final List<User> volunteerList = [];
+
+      if(extracted.length > 0){
+        extracted.forEach((userId, userData) {
+          User user = User(
+            id: userId,
+            username: userData['username'],
+            password: userData['password'],
+            name: userData['name'],
+            email: userData['email'],
+            phone: userData['phone'],
+            address: userData['address'],
+            userType: userData['userType'],
+          );
+          if (user.userType == 'Volunteer'){
+            volunteerList.add(user);
+          }
+        });
+        _userList = volunteerList;
+        notifyListeners();
+      }
+    } catch (e){
+      print(e);
+    }
+  }
+
+  //use in volunteer widget, return new user
+  Future<User> getUserById(String uid) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
+    User newUser;
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if(extractedData.length>0) {
+        extractedData.forEach((userId,userData) {
+          User newUser = User(
+            id: userId,
+            username: userData['username'],
+            password: userData['password'],
+            name: userData['name'],
+            email: userData['email'],
+            phone: userData['phone'],
+            address: userData['address'],
+            userType: userData['userType'],
+          );
+          if(newUser.id == uid) {
+            return newUser;
+          }
+        });
+      }
+    }catch(error){
+      print(error);
+    }
+    return newUser;
+  }
 
   Future<User> login(String username, String password) async {
     //can change the url link to your firebase link to check
