@@ -91,17 +91,6 @@ class SignUpPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'UserType',
-                  enabled: false,
-                ),
-                controller: userTypeController,
-              ),
-              SizedBox(
-                height: 20,
-              ),
               IntrinsicWidth(
                 stepWidth: double.infinity,
                 child: ElevatedButton(
@@ -126,10 +115,9 @@ class SignUpPage extends StatelessWidget {
                         password: passwordController.text,
                         name: nameController.text,
                         phone: phoneController.text,
-                        email: emailController.text,
-                        address: addressController.text,
                         userType: userTypeController.text,
                       );
+
                       final isUserExist = await userProvider.isUserExist(usernameController.text);
                       if(isUserExist == false){
                         //add user
@@ -138,6 +126,8 @@ class SignUpPage extends StatelessWidget {
                           //create volunteer object for add volunteer
                           Volunteer newVolunteer = Volunteer(
                             userId: response.id,
+                            email: emailController.text,
+                            address: addressController.text,
                           );
                           //add volunteer
                           volunteerProvider.addVolunteer(newVolunteer);

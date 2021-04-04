@@ -1,3 +1,5 @@
+import 'package:crs_app/models/volunteer.dart';
+import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
@@ -5,18 +7,46 @@ import 'package:crs_app/pages/document_add_page.dart';
 import 'package:crs_app/pages/volunteer_document_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 
-class ManageProfilePage extends StatelessWidget {
+class ManageProfilePage extends StatefulWidget {
   static const String routeName = '/ManageProfile-Page';
+  @override
+  _ManageProfilePageState createState() => _ManageProfilePageState();
+}
+
+class _ManageProfilePageState extends State<ManageProfilePage> {
+  TextEditingController nameController;
+  TextEditingController usernameController;
+  TextEditingController passwordController;
+  TextEditingController phoneController;
+  TextEditingController emailController;
+  TextEditingController addressController;
+  bool isInit = true;
+
+  @override
+  void didChangeDependencies(){
+    if(isInit){
+      UserProvider userProvider = Provider.of<UserProvider>(context);
+      VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
+      setState(() {
+        User newUser = userProvider.currentUser;
+        volunteerProvider.getVolunteerById(newUser.id);
+        Volunteer newVolunteer = volunteerProvider.currentVolunteer;
+        usernameController = TextEditingController(text:newUser.username);
+        passwordController = TextEditingController(text:newUser.password);
+        nameController = TextEditingController(text:newUser.name);
+        phoneController = TextEditingController(text:newUser.phone);
+        emailController = TextEditingController(text:newVolunteer.email);
+        addressController = TextEditingController(text:newVolunteer.address);
+      });
+    }
+    isInit = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    User newUser = userProvider.currentUser;
-    TextEditingController usernameController = TextEditingController(text:newUser.username);
-    TextEditingController passwordController = TextEditingController(text:newUser.password);
-    TextEditingController nameController = TextEditingController(text:newUser.name);
-    TextEditingController phoneController = TextEditingController(text:newUser.phone);
-    TextEditingController emailController = TextEditingController(text:newUser.email);
-    TextEditingController addressController = TextEditingController(text:newUser.address);
+    VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Manage Profile'),
@@ -125,16 +155,28 @@ class ManageProfilePage extends StatelessWidget {
                         password: passwordController.text,
                         name: nameController.text,
                         phone: phoneController.text,
+                      );
+                      Volunteer newVolunteer = Volunteer(
+                        userId: newUser.id,
                         email: emailController.text,
                         address: addressController.text,
+                        volunteerId: volunteerProvider.currentVolunteer.volunteerId,
                       );
-                      await userProvider.updateUser(newUser);
-                      userProvider.currentUser = newUser;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Change successfully'),
-                        ),
-                      );
+                      User user = userProvider.currentUser;
+                      Volunteer volunteer = volunteerProvider.currentVolunteer;
+                      if(user.password != newUser.password || user.name != newUser.name
+                      || user.phone != newUser.phone || volunteer.email != newVolunteer.email
+                      || volunteer.address != newVolunteer.address){
+                        await userProvider.updateUser(newUser);
+                        await volunteerProvider.updateVolunteer(newVolunteer);
+                        userProvider.currentUser = newUser;
+                        volunteerProvider.currentVolunteer = newVolunteer;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Change successfully'),
+                          ),
+                        );
+                      }
                     }
                     else{
                       ScaffoldMessenger.of(context).showSnackBar(
