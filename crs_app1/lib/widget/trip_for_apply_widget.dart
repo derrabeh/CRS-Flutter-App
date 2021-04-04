@@ -52,7 +52,7 @@ class TripWidget extends StatelessWidget {
           },
         ),
         onTap: (){
-          AlertDialog(
+          showDialog(context: context, builder: (context) => AlertDialog(
             title: Text('Are you sure?'),
             content: Text('Do you want to apply this trip?'),
             actions: [
@@ -83,7 +83,7 @@ class TripWidget extends StatelessWidget {
                 child: Text('Yes'),
               ),
             ],
-          );
+          ));
         },
       ),
     );
