@@ -31,6 +31,11 @@ class ApplicationWidget extends StatelessWidget {
           ),
 
           onTap: () {
+            applicationProvider.clearCurrentUser();
+            final newVolunteer = applicationProvider.getVolunteerFromApplicationVolunteerID(application.volunteerID);
+            if(newVolunteer != null) {
+              applicationProvider.getUserFromVolunteer(applicationProvider.currentVolunteer.userId);
+            }
             Navigator.pushNamed(context, ManageApplicationPage.routeName,
                     arguments: application.applicationID);
           },

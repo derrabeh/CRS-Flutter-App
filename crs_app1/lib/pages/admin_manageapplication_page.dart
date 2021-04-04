@@ -44,13 +44,8 @@ class _ManageApplicationPageState extends State<ManageApplicationPage> {
   Widget build(BuildContext context) {
     final applicationProvider = Provider.of<ApplicationProvider>(context);
     String id = ModalRoute.of(context).settings.arguments;
-    Application newApplication = applicationProvider.findById(id);
-    final newVolunteer = applicationProvider.getVolunteerFromApplicationVolunteerID(newApplication.volunteerID);
-    if(newVolunteer != null) {
-      applicationProvider.getUserFromVolunteer(applicationProvider.currentVolunteer.userId);
-    }
-    TextEditingController phoneController = TextEditingController(text: applicationProvider.currentUser.phone);
-    TextEditingController nameController = TextEditingController(text: applicationProvider.currentUser.name);
+    TextEditingController phoneController = TextEditingController(text: applicationProvider.currentUser==null ? '' :applicationProvider.currentUser.phone);
+    TextEditingController nameController = TextEditingController(text: applicationProvider.currentUser==null ? '' :applicationProvider.currentUser.name);
     TextEditingController rejectController = TextEditingController()..text = 'REJECTED';
     TextEditingController acceptController = TextEditingController()..text = 'ACCEPTED';
     return Scaffold(
@@ -152,7 +147,11 @@ class _ManageApplicationPageState extends State<ManageApplicationPage> {
                           );
                           //call method
                           applicationProvider.updateApplication(newApplication);
-
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Manage successfully'),
+                            ),
+                          );
                           Navigator.pop(context);
 
                         },

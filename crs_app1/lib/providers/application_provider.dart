@@ -21,6 +21,10 @@ class ApplicationProvider with ChangeNotifier {
     _applicationList = [];
   }
 
+  void clearCurrentUser(){
+    currentUser = null;
+  }
+
   Application findById(String id){
     return _applicationList.firstWhere((application) => application.applicationID == id);
   }
@@ -66,8 +70,6 @@ class ApplicationProvider with ChangeNotifier {
             id: userID,
             username: userData['username'],
             password: userData['password'],
-            email: userData['email'],
-            address: userData['address'],
             phone: userData['phone'],
             name: userData['name'],
           );
