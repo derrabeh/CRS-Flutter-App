@@ -6,9 +6,7 @@ class User extends ChangeNotifier{
   final String username;
   final String password;
   final String name;
-  final String email;
   final String phone;
-  final String address;
   final String userType; //volunteer, admin, manager, board directory
 
   User({
@@ -16,9 +14,7 @@ class User extends ChangeNotifier{
     @required this.username,
     @required this.password,
     @required this.name,
-    @required this.email,
     @required this.phone,
-    @required this.address,
     @required this.userType,
   });
 

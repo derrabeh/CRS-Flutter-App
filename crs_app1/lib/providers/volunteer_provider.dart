@@ -36,13 +36,15 @@ class VolunteerProvider with ChangeNotifier {
         extractedData.forEach((volunteerId,volunteerData) {
           Volunteer newVolunteer = Volunteer(
             volunteerId: volunteerId,
+            email: volunteerData['email'],
+            address: volunteerData['address'],
             userId: volunteerData['userId'],
-
           );
           if(newVolunteer.userId == userid) {
             currentVolunteer = newVolunteer;
           }
         });
+        notifyListeners();
       }
     }catch(error){
       print(error);
@@ -56,9 +58,13 @@ class VolunteerProvider with ChangeNotifier {
       final response = await http.post(url,
           body: json.encode({
             'userId' : volunteer.userId,
+            'email' : volunteer.email,
+            'address' : volunteer.address,
           }));
       final newVolunteer = Volunteer(
         volunteerId: json.decode(response.body)['name'],
+        address: volunteer.address,
+        email: volunteer.email,
         userId: volunteer.userId,
       );
       currentVolunteer = newVolunteer;
@@ -74,6 +80,8 @@ class VolunteerProvider with ChangeNotifier {
     try {
       await http.patch(url,
           body: json.encode({
+            'email' : volunteer.email,
+            'address' : volunteer.address,
           }));
       notifyListeners();
     }catch(error){

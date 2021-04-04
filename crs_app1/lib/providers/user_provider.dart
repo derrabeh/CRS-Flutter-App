@@ -34,9 +34,7 @@ class UserProvider with ChangeNotifier {
             username: userData['username'],
             password: userData['password'],
             name: userData['name'],
-            email: userData['email'],
             phone: userData['phone'],
-            address: userData['address'],
             userType: userData['userType'],
           );
           if (user.userType == 'Volunteer'){
@@ -66,9 +64,7 @@ class UserProvider with ChangeNotifier {
             username: userData['username'],
             password: userData['password'],
             name: userData['name'],
-            email: userData['email'],
             phone: userData['phone'],
-            address: userData['address'],
             userType: userData['userType'],
           );
           if(newUser.id == uid) {
@@ -96,6 +92,8 @@ class UserProvider with ChangeNotifier {
               id: userId,
               username: userdata['username'],
               password: userdata['password'],
+              name: userdata['name'],
+              phone: userdata['phone'],
               userType: userdata['userType'],
           );
           currentUser = newUser;
@@ -138,8 +136,6 @@ class UserProvider with ChangeNotifier {
           body: json.encode({
             'username': user.username,
             'password' : user.password,
-            'email' : user.email,
-            'address' : user.address,
             'name' : user.name,
             'phone' : user.phone,
             'userType': user.userType,
@@ -148,8 +144,6 @@ class UserProvider with ChangeNotifier {
         id: json.decode(response.body)['name'],
         username: user.username,
         password: user.password,
-        email: user.email,
-        address: user.address,
         name: user.name,
         phone: user.phone,
         userType: user.userType,
@@ -173,8 +167,6 @@ class UserProvider with ChangeNotifier {
           body: json.encode({
             'username': user.username,
             'password' : user.password,
-            'email' : user.email,
-            'address' : user.address,
             'name' : user.name,
             'phone' : user.phone,
             'userType': user.userType,
