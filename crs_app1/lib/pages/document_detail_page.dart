@@ -212,6 +212,11 @@ class _ManageDocumentPageState extends State<ManageDocumentPage> {
                             volunteerID: volunteerProvider.currentVolunteer.volunteerId,
                           );
                           documentProvider.updateDocument(newDocument);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Update document successfully'),
+                            ),
+                          );
                           Navigator.pop(context);
                         },
                       ),

@@ -103,6 +103,11 @@ class TripDetailPage extends StatelessWidget {
                           );
                           //call method
                           tripProvider.updateTrip(newTrip);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Trip update successfully'),
+                            ),
+                          );
                           Navigator.pop(context);
                         },
                       ),

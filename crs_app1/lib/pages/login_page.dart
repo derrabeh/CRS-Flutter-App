@@ -97,6 +97,13 @@ class LoginPage extends StatelessWidget {
                             ManagerPage.routeName);
                       }
                     }
+                    else{
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('UserName or Password are wrong , please enter again'),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -113,8 +120,6 @@ class LoginPage extends StatelessWidget {
                     ),
                     onPressed: () async{
                       Navigator.pushNamed(context, SignUpPage.routeName);
-
-
                       }
 
                   ),

@@ -58,6 +58,11 @@ class _DocumentWidgetState extends State<DocumentWidget> {
             color: Colors.red,
             onPressed: (){
               documentProvider.deleteDocument(document.documentID);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Document delete'),
+                ),
+              );
             },
           ),
           onTap: (){
@@ -90,6 +95,11 @@ class _DocumentWidgetState extends State<DocumentWidget> {
       onDismissed: (direction){
         if(direction == DismissDirection.endToStart){
           documentProvider.deleteDocument(document.documentID);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Document delete'),
+            ),
+          );
         }
       },
     );

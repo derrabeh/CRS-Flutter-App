@@ -171,6 +171,11 @@ class _AddTripPageState extends State<AddTripPage> {
                           );
                           //call method
                           tripProvider.addTrip(newTrip);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Organize trip successfully'),
+                            ),
+                          );
                           Navigator.pushReplacementNamed(context, TripPage.routeName);
                         },
                       ),
@@ -178,7 +183,6 @@ class _AddTripPageState extends State<AddTripPage> {
                   ),
                   Padding(padding: EdgeInsets.only(right: 10)),
                   Expanded(
-
                     child: IntrinsicWidth(
                       stepWidth: double.infinity,
                       child: ElevatedButton(

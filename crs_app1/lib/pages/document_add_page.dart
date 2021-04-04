@@ -178,6 +178,11 @@ class _AddDocumentPageState extends State<AddDocumentPage> {
                             volunteerID: volunteerProvider.currentVolunteer.volunteerId,
                           );
                           documentProvider.addDocument(newDocument);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Document Upload successfully'),
+                            ),
+                          );
                           Navigator.pop(context);
                         },
                       ),
