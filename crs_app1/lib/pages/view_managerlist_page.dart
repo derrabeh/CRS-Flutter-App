@@ -1,23 +1,13 @@
 //Navigator.pushNamed(context, ApplyTripPage.routeName);
 
-import 'package:crs_app/main.dart';
-import 'package:crs_app/models/application.dart';
-import 'package:crs_app/models/volunteer.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/trip_provider.dart';
+
+// import 'package:crs_app/providers/user_provider.dart';
+// import 'package:crs_app/widget/application_for_view_widget.dart';
+// import 'package:crs_app/widget/user_listview_widget.dart';
 import 'package:crs_app/providers/user_provider.dart';
-import 'package:crs_app/providers/volunteer_provider.dart';
-import 'package:crs_app/widget/application_for_view_widget.dart';
-//import 'package:crs_app/widget/manager_view_page.dart';
-import 'package:crs_app/widget/trip_widget1.dart';
 import 'package:crs_app/widget/user_listview_widget.dart';
-import 'package:date_format/date_format.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crs_app/widget/application_widget.dart';
 
 class ManagerListPage extends StatefulWidget {
   static const String routeName = '/ViewMangers-page';
@@ -33,7 +23,7 @@ class _ManagerListPageState extends State<ManagerListPage> {
     if (isInit) {
       final userProvider = Provider.of<UserProvider>(context);
       setState(() {
-        Provider.of<UserProvider>(context).getAllUser(userProvider.currentUser.id).then((value) => {
+        Provider.of<UserProvider>(context).getAllManager().then((value) => {
           setState(() {
             isInit = false;
           })
@@ -49,7 +39,7 @@ class _ManagerListPageState extends State<ManagerListPage> {
 
     //final userProvider = Provider.of<UserProvider>(context);
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    final userList = userProvider.userData;
+    final userList = userProvider.userList;
     return Scaffold(
       appBar: AppBar(
         title: Text('Manager List'),

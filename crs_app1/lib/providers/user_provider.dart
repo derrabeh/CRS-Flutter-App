@@ -19,6 +19,35 @@ class UserProvider with ChangeNotifier {
     _userList = [];
   }
 
+  Future<void> getAllManager() async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
+    try{
+      final response = await http.get(url);
+      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final List<User> volunteerList = [];
+
+      if(extracted.length > 0){
+        extracted.forEach((userId, userData) {
+          User user = User(
+            id: userId,
+            username: userData['username'],
+            password: userData['password'],
+            name: userData['name'],
+            phone: userData['phone'],
+            userType: userData['userType'],
+          );
+          if (user.userType == 'Manager'){
+            volunteerList.add(user);
+          }
+        });
+        _userList = volunteerList;
+        notifyListeners();
+      }
+    } catch (e){
+      print(e);
+    }
+  }
+
   //use in volunteer report
   Future<void> getAllVolunteer() async{
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
