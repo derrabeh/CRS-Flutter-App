@@ -1,46 +1,89 @@
+//import 'dart:js';
+
+//import 'dart:js';
+
+import 'package:date_format/date_format.dart';
 import 'package:crs_app/pages/boarddirectory_home_page.dart';
+import 'package:crs_app/pages/login_page.dart';
+import 'package:crs_app/pages/manage_home_page.dart';
+import 'package:crs_app/pages/signup_volunteer.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
+import 'package:crs_app/models/volunteer.dart';
+import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/providers/volunteer_provider.dart';
 
 
-class ManagerSignUpPage extends StatelessWidget {
+class ManagerSignUpPage extends StatefulWidget {
   static const String routeName = '/msignup-page';
+   @override
+   _ManagerSignUpPageState createState() =>  _ManagerSignUpPageState();
+   }
+
+   class  _ManagerSignUpPageState extends State<ManagerSignUpPage>{
+  bool isInit;
+  //final userProvider = Provider.of<UserProvider>(context);
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+
   //TextEditingController emailController = TextEditingController();
   //TextEditingController addressController = TextEditingController();
+  //TextEditingController tripDateController = TextEditingController(text: newTrip.tripDate);
   TextEditingController dateJoinedController = TextEditingController();
-  TextEditingController positionController = TextEditingController()..text = 'Manager';
-  TextEditingController userTypeController = TextEditingController()..text = 'Manager';
+  //TextEditingController dateJoinedController = TextEditingController();
+  TextEditingController remarkController = TextEditingController();
+  TextEditingController positionController = TextEditingController()
+    ..text = 'Manager';
+  TextEditingController userTypeController = TextEditingController()
+    ..text = 'Manager';
 
 
+   showDate() async{
+    final DateTime newDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2017,7),
+      lastDate: DateTime(2022,7),
+      helpText: 'Date Joined',
+    );
+    setState(() {
+      dateJoinedController.text = formatDate(
+        newDate,
+        [dd,'-',mm,'-',yyyy],
+      );
+    });
+  }
+void didChangeDependencies(){
+     if(isInit){
+       final userProvider = Provider.of<UserProvider>(context);
+       setState(() {
+         String id = ModalRoute.of(context).settings.arguments;
+         // User newUser = userProvider.findById(id);
+         // // username = newUser.username;
+         // // password = newUser.password;
+         // // name = newUser.name;
+         // // phone = newUser.phone;
+         // // userType = newUser.userType;
+         // dateJoinedController = TextEditingController(text: newUser.dateJoined);
+         // getUser();
 
-  // showDate() async{
-  //   final DateTime newDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: DateTime.now(),
-  //     firstDate: DateTime(2017,7),
-  //     lastDate: DateTime(2022,7),
-  //     helpText: 'Select a date',
-  //   );
-  //   setState(() {
-  //     eController.text = formatDate(
-  //       newDate,
-  //       [dd,'-',mm,'-',yyyy],
-  //     );
-  //   });
-  // }
 
+       });
+isInit = false;
+super.didChangeDependencies();
+     }
+}
 
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
+    VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(
+        context);
     return Scaffold(
       appBar: AppBar(
         title: Text('ADD NEW MEMBER'),
@@ -91,6 +134,38 @@ class ManagerSignUpPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              Row(
+                children: [
+
+                  Flexible(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Date Joined:',
+                      ),
+                      controller: dateJoinedController,
+                    ),
+                  ),
+                  IconButton(
+                    color: Colors.blue,
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: (){
+                      showDate();
+                    },
+                  ),
+                ],
+              ),
+              Divider(),
+              // TextField(
+              //   decoration: InputDecoration(
+              //     border: OutlineInputBorder(),
+              //     labelText: 'DateJoined',
+              //   ),
+              //   controller: dateJoinedController,
+              // ),
+              // SizedBox(
+              //   height: 20,
+              // ),
               // TextField(
               //   decoration: InputDecoration(
               //     border: OutlineInputBorder(),
@@ -133,6 +208,17 @@ class ManagerSignUpPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Remark',
+                  enabled: false,
+                ),
+                controller: remarkController,
+              ),
+              SizedBox(
+                height: 20,
+              ),
 
               IntrinsicWidth(
                 stepWidth: double.infinity,
@@ -141,18 +227,21 @@ class ManagerSignUpPage extends StatelessWidget {
                     padding: EdgeInsets.all(18.0),
                     child: Text('Add New Member'),
                   ),
-                  onPressed: () async{
+                  onPressed: () async {
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
                     //check the input is empty or not
-                    if(usernameController.text.isNotEmpty &&
+                    if (usernameController.text.isNotEmpty &&
                         passwordController.text.isNotEmpty &&
                         nameController.text.isNotEmpty &&
                         phoneController.text.isNotEmpty &&
-                       // emailController.text.isNotEmpty &&
-                        //addressController.text.isNotEmpty &&
+                        dateJoinedController.text.isNotEmpty&&
                         positionController.text.isNotEmpty &&
                         userTypeController.text.isNotEmpty
-                    ){
+                        // emailController.text.isNotEmpty &&
+                        //addressController.text.isNotEmpty &&
+                        // positionController.text.isNotEmpty &&
+                        // userTypeController.text.isNotEmpty
+                    ) {
                       //create user object for add user
                       User newUser = User(
                         username: usernameController.text,
@@ -162,28 +251,28 @@ class ManagerSignUpPage extends StatelessWidget {
                         //email: emailController.text,
                         //address: addressController.text,
                         //position: positionController.text,
+                        //dateJoined: dateJoinedController.text,
                         userType: userTypeController.text,
                       );
-                      final isUserExist = await userProvider.isUserExist(usernameController.text);
-                      if(isUserExist == false){
+                      final isUserExist = await userProvider.isUserExist(
+                          usernameController.text);
+                      if (isUserExist == false) {
                         //add user
                         final response = await userProvider.addUser(newUser);
-                        if(response.id != null) {
+                        if (response.id != null) {
                           //create volunteer object for add volunteer
                           User newUser = User(
                             id: response.id,
                           );
                           //add volunteer
-                         userProvider.addUser(newUser);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Sign Up successfully'),
-                            ),
-                          );
-                          Navigator.pop(context);
+                          userProvider.addUser(newUser);
+                          Navigator.pushReplacementNamed(context, BDHomePage
+                              .routeName);
+                          //back to login
+                          //Navigator.pop(context);
                         }
                       }
-                      else{
+                      else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('User name exist'),
@@ -191,7 +280,7 @@ class ManagerSignUpPage extends StatelessWidget {
                         );
                       }
                     }
-                    else{
+                    else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Need to fill all column'),
@@ -201,10 +290,12 @@ class ManagerSignUpPage extends StatelessWidget {
                   },
                 ),
               ),
+
             ],
           ),
         ),
       ),
     );
   }
+
 }

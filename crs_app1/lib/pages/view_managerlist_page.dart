@@ -40,7 +40,7 @@ class _ManagerListPageState extends State<ManagerListPage> {
 
     //final userProvider = Provider.of<UserProvider>(context);
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    final userList = userProvider.userList;
+    final userList = userProvider.userData;
     return Scaffold(
       appBar: AppBar(
         title: Text('Manager List'),
