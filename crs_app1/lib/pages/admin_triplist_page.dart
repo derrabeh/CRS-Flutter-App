@@ -42,6 +42,7 @@ class _TripListPageState extends State<TripListPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Trip List'),
+
       ),
 
       body: ListView.builder(

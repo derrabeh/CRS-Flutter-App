@@ -12,7 +12,7 @@ import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
 
-//import 'manager_signup_page.dart';
+import 'manager_signup_page.dart';
 
 class BDHomePage extends StatefulWidget {
   static const String routeName = '/BDHome-Page';
@@ -108,8 +108,6 @@ class _BDHomePageState extends State<BDHomePage> {
                 },
               ),
             ),
-
-
           ],
         ),
       ),

@@ -131,9 +131,12 @@ class SignUpPage extends StatelessWidget {
                           );
                           //add volunteer
                           volunteerProvider.addVolunteer(newVolunteer);
-                          Navigator.pushReplacementNamed(context, LoginPage.routeName);
-                          //back to login
-                          //Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sign Up successfully'),
+                            ),
+                          );
+                          Navigator.pop(context);
                         }
                       }
                       else{

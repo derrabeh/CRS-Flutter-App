@@ -13,8 +13,6 @@ import 'package:crs_app/pages/trip_page.dart';
 import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 
-import 'manage_admin.dart';
-
 class ManagerPage extends StatefulWidget {
   static const String routeName = '/Manager-Page';
   @override
@@ -52,7 +50,7 @@ class _ManagerPageState extends State<ManagerPage> {
               child: ElevatedButton(
                 child: Text('Manage CRS Adminstrators'),
                 onPressed: (){
-                  Navigator.pushNamed(context, ManageAdmin.routeName);
+                  //Navigator.pushNamed(context, ManageAdmin.routeName);
                 },
               ),
             ),

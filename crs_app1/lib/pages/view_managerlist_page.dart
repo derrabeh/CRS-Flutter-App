@@ -4,6 +4,7 @@
 // import 'package:crs_app/providers/user_provider.dart';
 // import 'package:crs_app/widget/application_for_view_widget.dart';
 // import 'package:crs_app/widget/user_listview_widget.dart';
+import 'package:crs_app/pages/manager_signup_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/widget/user_listview_widget.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _ManagerListPageState extends State<ManagerListPage> {
               ),
               onPressed: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ManagerListPage()));
+                    MaterialPageRoute(builder: (context) => ManagerSignUpPage()));
               },
             ),
           )
@@ -62,7 +63,7 @@ class _ManagerListPageState extends State<ManagerListPage> {
       body: ListView.builder(
         itemCount: userList.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-         value: userList[i],
+          value: userList[i],
           child: Column(
             children: [
               UserWidget(),

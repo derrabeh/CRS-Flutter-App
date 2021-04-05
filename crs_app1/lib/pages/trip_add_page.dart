@@ -176,7 +176,7 @@ class _AddTripPageState extends State<AddTripPage> {
                               content: Text('Organize trip successfully'),
                             ),
                           );
-                          Navigator.pushReplacementNamed(context, TripPage.routeName);
+                          Navigator.pop(context);
                         },
                       ),
                     ),

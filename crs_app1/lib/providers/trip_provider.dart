@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:crs_app/models/application.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/models/trip.dart';
 import 'package:http/http.dart' as http;
@@ -110,7 +111,43 @@ class TripProvider with ChangeNotifier {
     }
   }
 
-
+  Future<void> getAllApplicationTrip(Application application) async {
+    //firebase link/trips(is table name).json
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/trips.json';
+    try {
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      if (extractedData.length > 0) {
+        extractedData.forEach((tripID, tripData) {
+          Trip newTrip = Trip(
+              tripID: tripID,
+              description: tripData['description'],
+              crisisType: tripData['crisisType'],
+              tripDate: tripData['tripDate'],
+              location: tripData['location'],
+              numVolunteer: tripData['numVolunteer'],
+              userId: tripData['userId']
+          );
+          if (newTrip.tripID == application.tripID) {
+            bool haveTrip = false;
+            if(_tripList.length>0) {
+              _tripList.forEach((trip) {
+                if (trip.tripID == newTrip.tripID) {
+                  haveTrip = true;
+                }
+              });
+            }
+            if(haveTrip == false) {
+              _tripList.add(newTrip);
+            }
+          }
+        });
+        notifyListeners();
+      }
+    } catch (error) {
+      print(error);
+    }
+  }
   //get all
   Future<void> getAllTripForApply() async {
     //firebase link/trips(is table name).json

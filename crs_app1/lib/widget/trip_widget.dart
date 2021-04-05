@@ -31,6 +31,11 @@ class TripWidget extends StatelessWidget {
             ),
             color: Colors.red,
             onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Trip delete successfully'),
+                ),
+              );
               tripProvider.deleteTrip(trip.tripID);
             },
           ),
@@ -65,6 +70,11 @@ class TripWidget extends StatelessWidget {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Trip delete successfully'),
+            ),
+          );
           tripProvider.deleteTrip(trip.tripID);
         }
       },

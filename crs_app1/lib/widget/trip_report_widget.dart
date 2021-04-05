@@ -9,7 +9,6 @@ import 'package:crs_app/pages/application_volunteer_document.dart';
 import 'package:crs_app/pages/document_detail_page.dart';
 import 'package:crs_app/pages/manager_page.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
-import 'package:crs_app/pages/trip_details.dart';
 import 'package:crs_app/pages/volunteer_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,14 +51,14 @@ class TripReportWidget extends StatelessWidget {
             icon: Icon(Icons.read_more, size: 30),
             color: Colors.grey[700],
             onPressed: (){
-              Navigator.pushNamed(context, TripDetails.routeName,
-                  arguments: trip.tripID
-              );
+              //Navigator.pushNamed(context, VolunteerDetail.routeName,
+              //    arguments: user.id
+              //);
             },
           ),
           onTap: (){
             print(trip.location);
-            //expand and show more information about the trip
+            //expand and show more information about the volunteer
           },
         ),
       ),

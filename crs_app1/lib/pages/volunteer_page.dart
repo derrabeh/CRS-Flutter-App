@@ -1,3 +1,5 @@
+import 'package:crs_app/pages/application_trip_history_page.dart';
+import 'package:crs_app/pages/application_trip_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
@@ -35,40 +37,26 @@ class _VolunteerPageState extends State<VolunteerPage> {
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
-
     return  Scaffold(
       appBar: AppBar(
         title: Text('Volunteer Page'),
       ),
       drawer: Drawer(
-        elevation: 4,
-        child: ListView(
+        child: Column(
           children: [
-            Container(
-              height: 150,
-              color: Colors.white,
-              child: DrawerHeader(
-                child: Column(
-                  children: [
-                    Text(
-                      'User Name : ${userProvider.currentUser.username}',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            AppBar(
+              title: Text('Hello ${userProvider.currentUser.username}'),
+              automaticallyImplyLeading: false,
             ),
-            Divider(
-              color: Colors.brown,
-            ),
+            Divider(),
             ListTile(
-              title: Text('Sign Out'),
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Sign out'),
               onTap: (){
                 userProvider.currentUser = null;
-                //volunteerProvider.clearToDoList();
-                Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                Navigator.of(context).pushReplacementNamed(
+                    LoginPage.routeName
+                );
               },
             ),
           ],
@@ -108,7 +96,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
               child: ElevatedButton(
                 child: Text('View Application Status'),
                 onPressed: (){
-                  //go to view application status page
+                  Navigator.pushNamed(context, ApplicationTripViewPage.routeName);
                 },
               ),
             ),
@@ -120,7 +108,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
               child: ElevatedButton(
                 child: Text('View Application history'),
                 onPressed: (){
-                  //go to view application history page
+                  Navigator.pushNamed(context, ApplicationTripHistoryPage.routeName);
                 },
               ),
             ),
