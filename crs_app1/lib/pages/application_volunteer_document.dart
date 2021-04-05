@@ -42,6 +42,7 @@ class _ApplicationVolunteerDocumentPageState extends State<ApplicationVolunteerD
     final documentProvider = Provider.of<DocumentProvider>(context);
     final documentList = documentProvider.documentList;
     return Scaffold(
+      backgroundColor: Colors.yellow[700],
       appBar: AppBar(
         title:Text('All Document'),
       ),

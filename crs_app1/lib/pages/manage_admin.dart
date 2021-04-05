@@ -6,6 +6,8 @@ import 'package:crs_app/pages/application_volunteer_document.dart';
 import 'package:crs_app/pages/document_detail_page.dart';
 import 'package:crs_app/pages/manager_page.dart';
 import 'package:crs_app/pages/signup_volunteer.dart';
+import 'package:crs_app/providers/admin_provider.dart';
+import 'package:crs_app/widget/admin_widget.dart';
 import 'package:crs_app/widget/volunteer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,19 +28,21 @@ import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/pages/admin_home_page.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 
-class VolunteerReport extends StatefulWidget {
-  static const String routeName = 'volunteer-report';
-  @override
-  _VolunteerReportState createState() => _VolunteerReportState();
+import 'add_admin.dart';
+
+class ManageAdmin extends StatefulWidget {
+  static const String routeName = 'manage-admin';
+    @override
+  _ManageAdminState createState() => _ManageAdminState();
 }
 
-class _VolunteerReportState extends State<VolunteerReport> {
+class _ManageAdminState extends State<ManageAdmin> {
   bool isInit = true;
   @override
   void didChangeDependencies() {
     if (isInit){
       setState(() {
-        Provider.of<UserProvider>(context).getAllVolunteer().then((value) {
+        Provider.of<UserProvider>(context).getAllAdmin().then((value) {
           setState(() {
             isInit = false;
           });
@@ -57,15 +61,16 @@ class _VolunteerReportState extends State<VolunteerReport> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Volunteers Report'),
+        title: Text('Manage Admin'),
         actions: [
           CircleAvatar(
             radius: 22,
             child: IconButton(
-              icon: Icon(Icons.sort),
-              onPressed: (){
-                print(userProvider.userList);
-                //sort the volunteers alphabetically
+              icon: Icon(Icons.add),
+              onPressed: () {
+                print(userList.length);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AddAdmin()));
               },
             ),
           ),
@@ -78,7 +83,7 @@ class _VolunteerReportState extends State<VolunteerReport> {
           value: userList[i],
           child: Column(
             children: [
-              VolunteerWidget(),
+              AdminWidget(),
               Divider(
                 thickness: 1,
                 color: Colors.black54,

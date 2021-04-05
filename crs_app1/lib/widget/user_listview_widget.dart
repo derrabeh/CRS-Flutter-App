@@ -1,6 +1,5 @@
 import 'package:crs_app/models/trip.dart';
 import 'package:crs_app/models/user.dart';
-import 'package:crs_app/pages/editManager.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class UserWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final user = Provider.of<User>(context);
-
     return Dismissible(
       background: Container(
         color: Colors.red,
@@ -22,7 +20,6 @@ class UserWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 36, vertical: 8),
         child: ListTile(
-
           title: Text(
             user.username,
             style: TextStyle(
@@ -30,7 +27,6 @@ class UserWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           trailing: IconButton(
             icon: Icon(
               Icons.delete,
@@ -40,15 +36,12 @@ class UserWidget extends StatelessWidget {
             onPressed: () {
               userProvider.deleteUser(user.id);
             },
-
           ),
           onTap: () {
-            Navigator.pushNamed(context,  EditManagerProfilePage.routeName,
+            Navigator.pushNamed(context, ManagerListPage.routeName,
                 arguments: user.id);
           },
-
         ),
-
       ),
       direction: DismissDirection.endToStart,
       confirmDismiss: (direction) {
@@ -79,7 +72,5 @@ class UserWidget extends StatelessWidget {
         }
       },
     );
-
-
   }
 }

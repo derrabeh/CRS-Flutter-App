@@ -1,3 +1,4 @@
+import 'package:crs_app/models/admin.dart';
 import 'package:crs_app/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,25 +6,35 @@ import 'package:crs_app/models/user.dart';
 import 'package:crs_app/models/volunteer.dart';
 import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
-import 'package:crs_app/providers/volunteer_provider.dart';
+import 'package:crs_app/providers/admin_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:crs_app/models/trip.dart';
+import 'package:crs_app/pages/trip_page.dart';
+import 'package:crs_app/providers/trip_provider.dart';
+import 'package:crs_app/providers/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:date_format/date_format.dart';
+import 'dart:io';
+import 'package:flutter/cupertino.dart';
 
-
-class SignUpPage extends StatelessWidget {
-  static const String routeName = '/signup-page';
+class AddAdmin extends StatelessWidget {
+  static const String routeName = '/add-admin';
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController userTypeController = TextEditingController()..text = 'Volunteer';
+  TextEditingController positionController = TextEditingController();
+  TextEditingController dateJoinedController = TextEditingController();
+  TextEditingController userTypeController = TextEditingController()..text = 'admin';
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
+    AdminProvider adminProvider = Provider.of<AdminProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sign Up Page'),
+        title: Text('Add new CRS admin'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -54,7 +65,7 @@ class SignUpPage extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'name',
+                  labelText: 'Name',
                 ),
                 controller: nameController,
               ),
@@ -74,19 +85,35 @@ class SignUpPage extends StatelessWidget {
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Email',
+                  labelText: 'Position',
                 ),
-                controller: emailController,
+                controller: positionController,
               ),
               SizedBox(
                 height: 20,
               ),
-              TextField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Address',
-                ),
-                controller: addressController,
+              Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Date Joined',
+                      ),
+                      controller: dateJoinedController,
+                    ),
+                  ),
+                  IconButton(
+                    color: Colors.cyan,
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: (){
+                      dateJoinedController.text = formatDate(
+                        DateTime.now(),
+                        [dd,'-',mm,'-',yyyy],
+                      );;
+                    },
+                  ),
+                ],
               ),
               SizedBox(
                 height: 20,
@@ -96,7 +123,7 @@ class SignUpPage extends StatelessWidget {
                 child: ElevatedButton(
                   child: Padding(
                     padding: EdgeInsets.all(18.0),
-                    child: Text('Sign Up'),
+                    child: Text('Add Admin'),
                   ),
                   onPressed: () async{
                     ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -105,8 +132,8 @@ class SignUpPage extends StatelessWidget {
                         passwordController.text.isNotEmpty &&
                         nameController.text.isNotEmpty &&
                         phoneController.text.isNotEmpty &&
-                        emailController.text.isNotEmpty &&
-                        addressController.text.isNotEmpty &&
+                        positionController.text.isNotEmpty &&
+                        dateJoinedController.text.isNotEmpty &&
                         userTypeController.text.isNotEmpty
                     ){
                       //create user object for add user
@@ -124,22 +151,20 @@ class SignUpPage extends StatelessWidget {
                         final response = await userProvider.addUser(newUser);
                         if(response.id != null) {
                           //create volunteer object for add volunteer
-                          Volunteer newVolunteer = Volunteer(
+                          Admin newAdmin = Admin(
                             userId: response.id,
-                            email: emailController.text,
-                            address: addressController.text,
+                            position: positionController.text,
+                            dateJoined: dateJoinedController.text,
                           );
                           //add volunteer
-                          volunteerProvider.addVolunteer(newVolunteer);
-                          Navigator.pushReplacementNamed(context, LoginPage.routeName);
-                          //back to login
-                          //Navigator.pop(context);
+                          adminProvider.addAdmin(newAdmin);
+                          Navigator.pop(context);
                         }
                       }
                       else{
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('User name exist'),
+                            content: Text('User name taken, choose another'),
                           ),
                         );
                       }
@@ -147,7 +172,7 @@ class SignUpPage extends StatelessWidget {
                     else{
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Need to fill all column'),
+                          content: Text('Please fill out all fields'),
                         ),
                       );
                     }

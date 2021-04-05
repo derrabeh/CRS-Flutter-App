@@ -9,6 +9,7 @@ class User extends ChangeNotifier{
   final String phone;
   final String userType; //volunteer, admin, manager, board directory
 
+
   User({
     this.id,
     @required this.username,

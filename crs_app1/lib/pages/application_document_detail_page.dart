@@ -61,7 +61,7 @@ class _ViewApplicationDocumentPageState extends State<ViewApplicationDocumentPag
     final volunteerProvider = Provider.of<VolunteerProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Document'),
+        title: Text('Manage Document'),
       ),
       body: SingleChildScrollView(
         child: Padding(

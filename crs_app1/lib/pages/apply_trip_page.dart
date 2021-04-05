@@ -44,6 +44,7 @@ class _ApplyTripState extends State<ApplyTripPage> {
     final tripProvider = Provider.of<TripProvider>(context);
     final tripList = tripProvider.tripList;
     return Scaffold(
+      backgroundColor: Colors.yellow[700],
       appBar: AppBar(
         title:Text('Apply Trip'),
       ),

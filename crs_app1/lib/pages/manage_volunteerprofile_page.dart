@@ -155,7 +155,6 @@ class _ManageProfilePageState extends State<ManageProfilePage> {
                         password: passwordController.text,
                         name: nameController.text,
                         phone: phoneController.text,
-                        userType: 'Volunteer',
                       );
                       Volunteer newVolunteer = Volunteer(
                         userId: newUser.id,

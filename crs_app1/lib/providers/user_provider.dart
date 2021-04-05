@@ -19,6 +19,25 @@ class UserProvider with ChangeNotifier {
     _userList = [];
   }
 
+  //user in admin widget
+  String getUsername(String uid){
+    getAllAdmin();
+    User u = _userList.firstWhere((user) => user.id == uid);
+    return u.username;
+  }
+
+  String getName(String uid){
+    getAllAdmin();
+    User u = _userList.firstWhere((user) => user.id == uid);
+    return u.name;
+  }
+
+  String getPhone(String uid){
+    getAllAdmin();
+    User u = _userList.firstWhere((user) => user.id == uid);
+    return u.phone;
+  }
+
   Future<void> getAllManager() async{
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
     try{
@@ -44,6 +63,36 @@ class UserProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (e){
+      print(e);
+    }
+  }
+
+  //use in manage CRS admin
+  Future<void> getAllAdmin() async {
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
+    try {
+      final response = await http.get(url);
+      final extracted = json.decode(response.body) as Map<String, dynamic>;
+      final List<User> staffList = [];
+
+      if (extracted.length > 0) {
+        extracted.forEach((userId, userData) {
+          User user = User(
+            id: userId,
+            username: userData['username'],
+            password: userData['password'],
+            name: userData['name'],
+            phone: userData['phone'],
+            userType: userData['userType'],
+          );
+          if (user.userType == 'admin') {
+            staffList.add(user);
+          }
+        });
+        _userList = staffList;
+        notifyListeners();
+      }
+    } catch (e) {
       print(e);
     }
   }

@@ -44,13 +44,10 @@ class _DocumentWidgetState extends State<DocumentWidget> {
             height: 100,
             child: url==null? Text(''): Image.network(url),
           ),
-          subtitle:Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              document.documentType,
-              style: TextStyle(
-                fontSize: 20,
-              ),
+          subtitle:Text(
+            document.documentType,
+            style: TextStyle(
+              fontSize: 18,
             ),
           ),
           trailing: IconButton(
