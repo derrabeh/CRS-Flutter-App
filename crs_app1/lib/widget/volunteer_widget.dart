@@ -41,8 +41,16 @@ class VolunteerWidget extends StatelessWidget {
         color: Colors.cyan,
       ),
       child: Padding(
+
         padding: EdgeInsets.symmetric(horizontal: 36, vertical: 8),
         child: ListTile(
+          leading: IconButton(
+            icon: Icon(Icons.person, size: 30),
+            color: Colors.grey[700],
+            onPressed: (){
+
+            },
+          ),
           title: Text(user.name, style: TextStyle(
             fontSize: 24,
           )),
