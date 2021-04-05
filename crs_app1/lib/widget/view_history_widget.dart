@@ -1,9 +1,16 @@
 import 'package:crs_app/models/application.dart';
-import 'package:crs_app/pages/application_history_page.dart';
+import 'package:crs_app/models/trip.dart';
+import 'package:crs_app/pages/admin_application_listpage.dart';
+import 'package:crs_app/pages/admin_manageapplication_page.dart';
+import 'package:crs_app/pages/application_status_page.dart';
+import 'package:crs_app/pages/view_application_status.dart';
 import 'package:crs_app/pages/view_history_page.dart';
 import 'package:crs_app/providers/application_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:crs_app/pages/trip_detail_page.dart';
+import 'package:crs_app/providers/trip_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:crs_app/pages/view_history_page.dart';
 
 class ViewHistoryWidget extends StatelessWidget {
   @override
@@ -25,19 +32,9 @@ class ViewHistoryWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              Text('Apply Date : ${application.applicationDate}'),
-              SizedBox(height: 10),
-              Text('Status : ${application.status}'),
-              SizedBox(height: 10),
-              Text('Remark : ${application.remarks == ''? 'No Remarks' : application.remarks}'),
-              SizedBox(height: 10),
-            ],
-          ),
           onTap: () {
+            Navigator.pushNamed(context, ViewHistoryPage.routeName,
+                arguments: application.applicationID);
           },
         ),
       ),

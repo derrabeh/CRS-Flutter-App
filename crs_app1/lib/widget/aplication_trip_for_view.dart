@@ -24,13 +24,8 @@ class ApplicationTripViewWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              Text('Trip Date : ${trip.tripDate}'),
-              SizedBox(height: 10),
-            ],
+          subtitle: Text(
+            'Trip Date : ${trip.tripDate}',
           ),
           onTap: () {
             Navigator.pushNamed(context, ViewApplicationPage.routeName,
