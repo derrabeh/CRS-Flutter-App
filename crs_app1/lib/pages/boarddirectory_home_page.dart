@@ -12,7 +12,8 @@ import 'package:crs_app/pages/login_page.dart';
 import 'package:crs_app/pages/trip_page.dart';
 import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
- import 'package:crs_app/pages/view_managerlist_page.dart';
+import 'package:crs_app/pages/view_managerlist_page.dart';
+import 'package:crs_app/widget/manager_drawer.dart';
 
 import 'editManager.dart';
 
@@ -52,40 +53,7 @@ class _BDHomePageState extends State<BDHomePage> {
       appBar: AppBar(
         title: Text('Board Directory Home Page'),
       ),
-      drawer: Drawer(
-        elevation: 4,
-        child: ListView(
-          children: [
-            Container(
-              height: 150,
-              color: Colors.white,
-              child: DrawerHeader(
-                child: Column(
-                  children: [
-                    Text(
-                      'User Name : ${userProvider.currentUser.username}',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              color: Colors.brown,
-            ),
-            ListTile(
-              title: Text('Sign Out'),
-              onTap: (){
-                userProvider.currentUser = null;
-                tripProvider.clearTripList();
-                Navigator.pushReplacementNamed(context, LoginPage.routeName);
-              },
-            ),
-          ],
-        ),
-      ),
+     drawer: ManagerDrawer(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
