@@ -26,7 +26,6 @@ class TripWidgetForApplication extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-
           onTap: () {
             Navigator.pushNamed(context, ApplicationListPage.routeName,
                 arguments: trip.tripID);
@@ -58,6 +57,11 @@ class TripWidgetForApplication extends StatelessWidget {
       },
       onDismissed: (direction) {
         if (direction == DismissDirection.endToStart) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Trip delete successfully'),
+            ),
+          );
           tripProvider.deleteTrip(trip.tripID);
         }
       },

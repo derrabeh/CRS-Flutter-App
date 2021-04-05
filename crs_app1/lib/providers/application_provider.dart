@@ -142,6 +142,62 @@ class ApplicationProvider with ChangeNotifier {
     }
   }
 
+  Future<void> getApplicationForVolunteer(String volunteerID) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/applications.json';
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Application> loadingApplication = [];
+      if(extractedData.length>0) {
+        extractedData.forEach((applicationID,applicationData) {
+          Application newApplication = Application(
+            applicationID: applicationID,
+            applicationDate : applicationData['applicationDate'],
+            status: applicationData['status'],
+            remarks: applicationData['remarks'],
+            volunteerID: applicationData['volunteerID'],
+            tripID: applicationData['tripID'],
+          );
+          if(newApplication.volunteerID == volunteerID) {
+            loadingApplication.add(newApplication);
+          }
+        });
+        _applicationList = loadingApplication;
+        notifyListeners();
+      }
+    }catch(error){
+      print(error);
+    }
+  }
+
+  Future<void> getApplicationOfTrip(String volunteerID, String tripID) async{
+    String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/applications.json';
+    try{
+      final response = await http.get(url);
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      final List<Application> loadingApplication = [];
+      if(extractedData.length>0) {
+        extractedData.forEach((applicationID,applicationData) {
+          Application newApplication = Application(
+            applicationID: applicationID,
+            applicationDate : applicationData['applicationDate'],
+            status: applicationData['status'],
+            remarks: applicationData['remarks'],
+            volunteerID: applicationData['volunteerID'],
+            tripID: applicationData['tripID'],
+          );
+          if(newApplication.volunteerID == volunteerID && newApplication.tripID == tripID) {
+            loadingApplication.add(newApplication);
+          }
+        });
+        _applicationList = loadingApplication;
+        notifyListeners();
+      }
+    }catch(error){
+      print(error);
+    }
+  }
+
 
   Future<Document> addApplication(Application application) async {
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/applications.json';

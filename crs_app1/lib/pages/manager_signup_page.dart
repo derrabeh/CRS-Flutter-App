@@ -1,12 +1,7 @@
 import 'package:crs_app/pages/boarddirectory_home_page.dart';
-import 'package:crs_app/pages/login_page.dart';
-import 'package:crs_app/pages/manage_home_page.dart';
-import 'package:crs_app/pages/signup_volunteer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
-import 'package:crs_app/models/volunteer.dart';
-import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/providers/volunteer_provider.dart';
 
@@ -180,9 +175,12 @@ class ManagerSignUpPage extends StatelessWidget {
                           );
                           //add volunteer
                          userProvider.addUser(newUser);
-                          Navigator.pushReplacementNamed(context, BDHomePage.routeName);
-                          //back to login
-                          //Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Sign Up successfully'),
+                            ),
+                          );
+                          Navigator.pop(context);
                         }
                       }
                       else{

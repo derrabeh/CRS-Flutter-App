@@ -1,19 +1,8 @@
-import 'package:crs_app/models/todo.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
-import 'package:crs_app/pages/apply_trip_page.dart';
-import 'package:crs_app/pages/manage_volunteerprofile_page.dart';
-import 'package:crs_app/providers/user_provider.dart';
-import 'package:crs_app/providers/volunteer_provider.dart';
-import 'package:crs_app/pages/login_page.dart';
-import 'package:crs_app/pages/trip_page.dart';
-import 'package:crs_app/providers/trip_provider.dart';
-import 'package:crs_app/pages/admin_triplist_page.dart';
-import 'package:crs_app/pages/view_managerlist_page.dart';
-
 import 'package:flutter/cupertino.dart';
 
 class EditManagerProfilePage extends StatelessWidget {
@@ -39,7 +28,8 @@ class EditManagerProfilePage extends StatelessWidget {
               ),
             ),
             onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ManagerListPage()));
+              Navigator.pop(context);
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => ManagerListPage()));
             },
           ),
           SizedBox(
@@ -104,97 +94,102 @@ class EditManagerProfilePage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-
-              IntrinsicWidth(
-                stepWidth: double.infinity,
-                child: ElevatedButton(
-                  child: Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: Text('Change Profile'),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: IntrinsicWidth(
+                  stepWidth: double.infinity,
+                  child: ElevatedButton(
+                    child: Padding(
+                      padding: EdgeInsets.all(18.0),
+                      child: Text('Change Profile'),
+                    ),
+                    onPressed: () async {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      if(usernameController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty &&
+                          nameController.text.isNotEmpty &&
+                          phoneController.text.isNotEmpty &&
+                          userTypeController.text.isNotEmpty
+                         // emailController.text.isNotEmpty &&
+                         // addressController.text.isNotEmpty){
+                        //create user object for add user
+                        ){
+                        User newUser = User(
+                          id: userProvider.currentUser.id,
+                          username: usernameController.text,
+                          password: passwordController.text,
+                          name: nameController.text,
+                          phone: phoneController.text,
+                          userType: userTypeController.text,
+                          //email: emailController.text,
+                          //address: addressController.text,
+                        );
+                        await userProvider.updateUser(newUser);
+                        userProvider.currentUser = newUser;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Change successfully'),
+                          ),
+                        );
+                      }
+                      else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Must fill all column'),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  onPressed: () async {
-                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    if(usernameController.text.isNotEmpty &&
-                        passwordController.text.isNotEmpty &&
-                        nameController.text.isNotEmpty &&
-                        phoneController.text.isNotEmpty &&
-                        userTypeController.text.isNotEmpty
-                       // emailController.text.isNotEmpty &&
-                       // addressController.text.isNotEmpty){
-                      //create user object for add user
-                      ){
-                      User newUser = User(
-                        id: userProvider.currentUser.id,
-                        username: usernameController.text,
-                        password: passwordController.text,
-                        name: nameController.text,
-                        phone: phoneController.text,
-                        userType: userTypeController.text,
-                        //email: emailController.text,
-                        //address: addressController.text,
-                      );
-                      await userProvider.updateUser(newUser);
-                      userProvider.currentUser = newUser;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Change successfully'),
-                        ),
-                      );
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Must fill all column'),
-                        ),
-                      );
-                    }
-                  },
                 ),
               ),
-              IntrinsicWidth(
-                stepWidth: double.infinity,
-                child: ElevatedButton(
-                  child: Padding(
-                    padding: EdgeInsets.all(18.0),
-                    child: Text('Suspend'),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: IntrinsicWidth(
+                  stepWidth: double.infinity,
+                  child: ElevatedButton(
+                    child: Padding(
+                      padding: EdgeInsets.all(18.0),
+                      child: Text('Suspend'),
+                    ),
+                    onPressed: () async {
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      if(usernameController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty &&
+                          nameController.text.isNotEmpty &&
+                          phoneController.text.isNotEmpty &&
+                          userTypeController.text.isNotEmpty
+                      // emailController.text.isNotEmpty &&
+                      // addressController.text.isNotEmpty){
+                      //create user object for add user
+                      ){
+                        User newUser = User(
+                          id: userProvider.currentUser.id,
+                          username: usernameController.text,
+                          password: passwordController.text,
+                          name: nameController.text,
+                          phone: phoneController.text,
+                          userType: userTypeController.text,
+                          //email: emailController.text,
+                          //address: addressController.text,
+                        );
+                        await userProvider.updateUser(newUser);
+                        userProvider.currentUser = newUser;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Suspended'),
+                          ),
+                        );
+                      }
+                      else{
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Must fill all column'),
+                          ),
+                        );
+                      }
+                    },
                   ),
-                  onPressed: () async {
-                    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                    if(usernameController.text.isNotEmpty &&
-                        passwordController.text.isNotEmpty &&
-                        nameController.text.isNotEmpty &&
-                        phoneController.text.isNotEmpty &&
-                        userTypeController.text.isNotEmpty
-                    // emailController.text.isNotEmpty &&
-                    // addressController.text.isNotEmpty){
-                    //create user object for add user
-                    ){
-                      User newUser = User(
-                        id: userProvider.currentUser.id,
-                        username: usernameController.text,
-                        password: passwordController.text,
-                        name: nameController.text,
-                        phone: phoneController.text,
-                        userType: userTypeController.text,
-                        //email: emailController.text,
-                        //address: addressController.text,
-                      );
-                      await userProvider.updateUser(newUser);
-                      userProvider.currentUser = newUser;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Suspended'),
-                        ),
-                      );
-                    }
-                    else{
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Must fill all column'),
-                        ),
-                      );
-                    }
-                  },
                 ),
               ),
             ],

@@ -1,12 +1,6 @@
 //Navigator.pushNamed(context, ApplyTripPage.routeName);
 
-import 'package:crs_app/main.dart';
-import 'package:crs_app/models/application.dart';
-import 'package:crs_app/models/volunteer.dart';
 import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/widget/application_for_view_widget.dart';
@@ -50,7 +44,6 @@ class _ViewApplicationPageState extends State<ViewApplicationPage> {
     final applicationProvider = Provider.of<ApplicationProvider>(context);
     final applicationList = applicationProvider.applicationList;
     return Scaffold(
-      backgroundColor: Colors.yellow[700],
       appBar: AppBar(
         title:Text('Application Status'),
       ),

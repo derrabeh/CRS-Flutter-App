@@ -1,3 +1,4 @@
+import 'package:crs_app/pages/boarddirectory_home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -92,9 +93,12 @@ class LoginPage extends StatelessWidget {
                         Navigator.pushReplacementNamed(context,
                             AdminHomePage.routeName);
                       }
-                      else if (userProvider.currentUser.userType == 'manager'){
+                      else if (userProvider.currentUser.userType == 'Manager'){
                         Navigator.pushReplacementNamed(context,
                             ManagerPage.routeName);
+                      }
+                      else if(userProvider.currentUser.userType == 'director'){
+                        Navigator.pushReplacementNamed(context, BDHomePage.routeName);
                       }
                     }
                     else{

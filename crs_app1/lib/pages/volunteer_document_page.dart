@@ -40,7 +40,6 @@ class _DocumentState extends State<DocumentPage> {
     final userProvider = Provider.of<UserProvider>(context);
     final documentList = documentProvider.documentList;
     return Scaffold(
-      backgroundColor: Colors.yellow[700],
       appBar: AppBar(
         title:Text('All Document'),
         actions: [

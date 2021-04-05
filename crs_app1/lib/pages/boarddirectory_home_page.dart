@@ -108,8 +108,6 @@ class _BDHomePageState extends State<BDHomePage> {
                 },
               ),
             ),
-
-
           ],
         ),
       ),

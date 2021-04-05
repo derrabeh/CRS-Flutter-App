@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crs_app/models/user.dart';
-import 'package:crs_app/pages/apply_trip_page.dart';
-import 'package:crs_app/pages/manage_volunteerprofile_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/pages/login_page.dart';
 import 'package:crs_app/pages/trip_page.dart';
-import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 class AdminHomePage extends StatefulWidget {
   static const String routeName = '/adminHome-Page';
@@ -37,41 +33,26 @@ class _AdminHomePageState extends State<AdminHomePage> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    TripProvider tripProvider = Provider.of<TripProvider>(context);
-    VolunteerProvider volunteerProvider = Provider.of<VolunteerProvider>(context);
     return  Scaffold(
       appBar: AppBar(
         title: Text('Admin Home Page'),
       ),
       drawer: Drawer(
-        elevation: 4,
-        child: ListView(
+        child: Column(
           children: [
-            Container(
-              height: 150,
-              color: Colors.white,
-              child: DrawerHeader(
-                child: Column(
-                  children: [
-                    Text(
-                      'User Name : ${userProvider.currentUser.username}',
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            AppBar(
+              title: Text('Hello ${userProvider.currentUser.username}'),
+              automaticallyImplyLeading: false,
             ),
-            Divider(
-              color: Colors.brown,
-            ),
+            Divider(),
             ListTile(
-              title: Text('Sign Out'),
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Sign out'),
               onTap: (){
                 userProvider.currentUser = null;
-                tripProvider.clearTripList();
-                Navigator.pushReplacementNamed(context, LoginPage.routeName);
+                Navigator.of(context).pushReplacementNamed(
+                    LoginPage.routeName
+                );
               },
             ),
           ],
