@@ -2,7 +2,6 @@ import 'package:crs_app/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 
 class VolunteerDetail extends StatelessWidget {
   static const String routeName = '/volunteer-detail';
@@ -53,9 +52,8 @@ class VolunteerDetail extends StatelessWidget {
                         child: ElevatedButton(
                           child: Text('Contact Volunteer'),
                           onPressed: (){
-                            print(user.phone);
-                            String phone = user.phone;
-                            FlutterPhoneDirectCaller.callNumber(phone);
+                            //insert code to contact
+                            //or can view volunteers application
                           },
                         ),
                       ),

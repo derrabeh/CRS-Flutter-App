@@ -42,7 +42,7 @@ class _VolunteerReportState extends State<VolunteerReport> {
               icon: Icon(Icons.sort),
               onPressed: (){
                 print(userProvider.userList);
-                userList.sort((a, b) => a.name.compareTo(b.name));
+                //sort the volunteers alphabetically
               },
             ),
           ),

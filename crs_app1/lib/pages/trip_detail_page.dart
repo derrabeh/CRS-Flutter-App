@@ -54,16 +54,6 @@ class TripDetailPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(),
-              //   //  labelText: 'Location',
-              //   ),
-              //   controller: crisisTypeController,
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),

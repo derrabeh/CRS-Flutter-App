@@ -1,5 +1,6 @@
 import 'package:crs_app/pages/application_trip_history_page.dart';
 import 'package:crs_app/pages/application_trip_view_page.dart';
+import 'package:crs_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
@@ -41,27 +42,7 @@ class _VolunteerPageState extends State<VolunteerPage> {
       appBar: AppBar(
         title: Text('Volunteer Page'),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            AppBar(
-              title: Text('Hello ${userProvider.currentUser.username}'),
-              automaticallyImplyLeading: false,
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Sign out'),
-              onTap: (){
-                userProvider.currentUser = null;
-                Navigator.of(context).pushReplacementNamed(
-                    LoginPage.routeName
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: UserDrawer(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

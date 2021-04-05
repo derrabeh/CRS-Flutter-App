@@ -15,14 +15,14 @@ class DocumentWidget extends StatefulWidget {
 class _DocumentWidgetState extends State<DocumentWidget> {
   String url;
   void getImage(context) async{
-    final documentProvider = Provider.of<DocumentProvider>(context);
     final document = Provider.of<Document>(context);
     String imageName = document.image;
     final ref = FirebaseStorage.instance.ref().child('images/$imageName');
-    String location = await ref.getDownloadURL();
+    String location =await ref.getDownloadURL();
     setState(() {
       url = location;
     });
+    super.didChangeDependencies();
   }
 
   @override
@@ -42,7 +42,7 @@ class _DocumentWidgetState extends State<DocumentWidget> {
             alignment: Alignment.topLeft,
             width: 100,
             height: 100,
-            child: url==null? Text(''): Image.network(url),
+            child: url==null? Text('Please reopen the page to see the image'): Image.network(url),
           ),
           subtitle:Padding(
             padding: EdgeInsets.all(8),

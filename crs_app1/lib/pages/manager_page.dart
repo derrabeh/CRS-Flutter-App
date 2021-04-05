@@ -1,6 +1,7 @@
+import 'package:crs_app/pages/manage_admin.dart';
 import 'package:crs_app/pages/trip_report.dart';
 import 'package:crs_app/pages/volunteers_report.dart';
-import 'package:crs_app/widget/manager_drawer.dart';
+import 'package:crs_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
@@ -12,8 +13,6 @@ import 'package:crs_app/pages/login_page.dart';
 import 'package:crs_app/pages/trip_page.dart';
 import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
-
-import 'manage_admin.dart';
 
 class ManagerPage extends StatefulWidget {
   static const String routeName = '/Manager-Page';
@@ -29,7 +28,7 @@ class _ManagerPageState extends State<ManagerPage> {
       appBar: AppBar(
         title: Text('Manager Page'),
       ),
-      drawer: ManagerDrawer(),
+      drawer: UserDrawer(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

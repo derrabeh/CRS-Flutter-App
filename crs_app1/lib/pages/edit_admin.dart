@@ -1,6 +1,5 @@
-import 'package:crs_app/models/admin.dart';
-import 'package:crs_app/pages/view_managerlist_page.dart';
-import 'package:crs_app/providers/admin_provider.dart';
+import 'package:crs_app/models/staff.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +19,7 @@ class _EditAdminState extends State<EditAdmin> {
   void didChangeDependencies() {
     if (isInit){
       setState(() {
-        Provider.of<AdminProvider>(context).getAllAdmin().then((value) {
+        Provider.of<StaffProvider>(context).getAllAdmin().then((value) {
           setState(() {
             isInit = false;
           });
@@ -34,10 +33,10 @@ class _EditAdminState extends State<EditAdmin> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    AdminProvider volunteerProvider = Provider.of<AdminProvider>(context);
-
+    StaffProvider staffProvider = Provider.of<StaffProvider>(context);
     String id = ModalRoute.of(context).settings.arguments;
     User user = userProvider.findById(id);
+    staffProvider.findStaffByUserID(user.id);
     //final aList = volunteerProvider.adminList;
     //Admin admin = aList.firstWhere((admin) => admin.userId == id);
 
@@ -115,16 +114,16 @@ class _EditAdminState extends State<EditAdmin> {
               SizedBox(
                 height: 20,
               ),
-              // TextField(
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(),
-              //     labelText: 'phone',
-              //   ),
-              //   controller: phoneController,
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
+              TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'phone',
+                ),
+                controller: phoneController,
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -191,7 +190,7 @@ class _EditAdminState extends State<EditAdmin> {
                   child: ElevatedButton(
                     child: Padding(
                       padding: EdgeInsets.all(18.0),
-                      child: Text('Suspend'),
+                      child: Text(staffProvider.currentStaff.suspend==false? 'Suspend' : 'UnSuspend'),
                     ),
                     onPressed: () async {
                       ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -205,22 +204,46 @@ class _EditAdminState extends State<EditAdmin> {
                       //create user object for add user
                       ){
                         User newUser = User(
-                          id: userProvider.currentUser.id,
+                          id: user.id,
                           username: usernameController.text,
                           password: passwordController.text,
                           name: nameController.text,
                           phone: phoneController.text,
                           userType: userTypeController.text,
-                          //email: emailController.text,
-                          //address: addressController.text,
                         );
                         await userProvider.updateUser(newUser);
                         userProvider.currentUser = newUser;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Suspended'),
-                          ),
-                        );
+                        if(staffProvider.currentStaff.suspend==false) {
+                          Staff newStaff = Staff(
+                            staffID: staffProvider.currentStaff.staffID,
+                            position: staffProvider.currentStaff.position,
+                            dateJoined: staffProvider.currentStaff.dateJoined,
+                            userID: staffProvider.currentStaff.userID,
+                            suspend: true,
+                          );
+                          staffProvider.updateStaff(newStaff);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Suspended'),
+                            ),
+                          );
+                        }
+                        else{
+                          Staff newStaff = Staff(
+                            staffID: staffProvider.currentStaff.staffID,
+                            position: staffProvider.currentStaff.position,
+                            dateJoined: staffProvider.currentStaff.dateJoined,
+                            userID: staffProvider.currentStaff.userID,
+                            suspend: false,
+                          );
+                          staffProvider.updateStaff(newStaff);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('UnSuspended'),
+                            ),
+                          );
+                        }
+                        Navigator.pop(context);
                       }
                       else{
                         ScaffoldMessenger.of(context).showSnackBar(

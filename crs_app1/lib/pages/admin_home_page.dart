@@ -1,3 +1,4 @@
+import 'package:crs_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
@@ -5,7 +6,6 @@ import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/pages/login_page.dart';
 import 'package:crs_app/pages/trip_page.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
-import 'package:crs_app/widget/manager_drawer.dart';
 class AdminHomePage extends StatefulWidget {
   static const String routeName = '/adminHome-Page';
   @override
@@ -38,7 +38,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       appBar: AppBar(
         title: Text('Admin Home Page'),
       ),
-        drawer: ManagerDrawer(),
+      drawer: UserDrawer(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(

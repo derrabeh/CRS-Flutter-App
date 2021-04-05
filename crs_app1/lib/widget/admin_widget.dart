@@ -1,6 +1,8 @@
 
+import 'package:crs_app/models/staff.dart';
 import 'package:crs_app/pages/editManager.dart';
 import 'package:crs_app/pages/edit_admin.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,8 @@ class AdminWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final user  = Provider.of<User>(context);
-
+    StaffProvider staffProvider = Provider.of<StaffProvider>(context);
+    staffProvider.findStaffByUserID(user.id);
     return Card(
       key: ValueKey(user.id),
       child: Column(
@@ -36,13 +39,6 @@ class AdminWidget extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  TextButton(
-                      onPressed: () {},
-                      child: Text('Suspend',
-                          style: TextStyle(
-                            fontSize: 16.0,
-                          ))
-                  ),
                   TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context,  EditAdmin.routeName,

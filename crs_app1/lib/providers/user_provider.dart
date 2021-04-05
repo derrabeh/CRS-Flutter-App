@@ -19,7 +19,6 @@ class UserProvider with ChangeNotifier {
     _userList = [];
   }
 
-
   //use in manage CRS admin
   Future<void> getAllAdmin() async {
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';

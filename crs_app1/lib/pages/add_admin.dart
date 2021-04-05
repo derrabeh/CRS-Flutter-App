@@ -1,12 +1,12 @@
-import 'package:crs_app/models/admin.dart';
+import 'package:crs_app/models/staff.dart';
 import 'package:crs_app/pages/login_page.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
 import 'package:crs_app/models/volunteer.dart';
 import 'package:crs_app/pages/volunteer_page.dart';
 import 'package:crs_app/providers/user_provider.dart';
-import 'package:crs_app/providers/admin_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/models/trip.dart';
 import 'package:crs_app/pages/trip_page.dart';
@@ -30,7 +30,7 @@ class AddAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
-    AdminProvider adminProvider = Provider.of<AdminProvider>(context);
+    StaffProvider staffProvider = Provider.of<StaffProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -151,13 +151,19 @@ class AddAdmin extends StatelessWidget {
                         final response = await userProvider.addUser(newUser);
                         if(response.id != null) {
                           //create volunteer object for add volunteer
-                          Admin newAdmin = Admin(
-                            userId: response.id,
+                          Staff newAdmin = Staff(
+                            userID: response.id,
                             position: positionController.text,
                             dateJoined: dateJoinedController.text,
+                            suspend: false,
                           );
                           //add volunteer
-                          adminProvider.addAdmin(newAdmin);
+                          staffProvider.addStaff(newAdmin);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Add successfully'),
+                            ),
+                          );
                           Navigator.pop(context);
                         }
                       }

@@ -3,7 +3,6 @@ import 'package:crs_app/pages/admin_application_listpage.dart';
 import 'package:crs_app/pages/admin_manageapplication_page.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
 import 'package:crs_app/pages/application_document_detail_page.dart';
-import 'package:crs_app/pages/application_history_page.dart';
 import 'package:crs_app/pages/application_status_page.dart';
 import 'package:crs_app/pages/application_trip_history_page.dart';
 import 'package:crs_app/pages/application_trip_view_page.dart';
@@ -23,7 +22,7 @@ import 'package:crs_app/pages/view_history_page.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
 import 'package:crs_app/pages/volunteer_detail.dart';
 import 'package:crs_app/pages/volunteers_report.dart';
-import 'package:crs_app/providers/admin_provider.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:crs_app/widget/application_trip_for_history.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,9 +53,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AdminProvider(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => TripProvider(),
         ),
         ChangeNotifierProvider(
@@ -71,6 +67,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => VolunteerProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => StaffProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -80,10 +79,6 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: LoginPage.routeName,
         routes: {
-          AddAdmin.routeName:(context) => AddAdmin(),
-          EditAdmin.routeName:(context) => EditAdmin(),
-          ManageAdmin.routeName:(context) => ManageAdmin(),
-          TripDetails.routeName:(context) => TripDetails(),
           TripReport.routeName:(context) => TripReport(),
           VolunteerDetail.routeName:(context) => VolunteerDetail(),
           VolunteerReport.routeName:(context) => VolunteerReport(),
@@ -106,7 +101,6 @@ class MyApp extends StatelessWidget {
           ApplicationVolunteerDocumentPage.routeName:(context) => ApplicationVolunteerDocumentPage(),
           ViewApplicationDocumentPage.routeName:(context) => ViewApplicationDocumentPage(),
           ManagerListPage.routeName:(context) => ManagerListPage(),
-          ApplicationHistoryPage.routeName:(context) => ApplicationHistoryPage(),
           ApplicationTripHistoryPage.routeName: (context) => ApplicationTripHistoryPage(),
           ApplicationTripViewPage.routeName:(context) => ApplicationTripViewPage(),
           ApplicationStatusPage.routeName:(context) => ApplicationStatusPage(),
@@ -115,6 +109,10 @@ class MyApp extends StatelessWidget {
           BDHomePage.routeName: (context) => BDHomePage(),
           EditManagerProfilePage.routeName: (context) =>EditManagerProfilePage(),
           ManagerSignUpPage.routeName: (context) => ManagerSignUpPage(),
+          AddAdmin.routeName:(context) => AddAdmin(),
+          EditAdmin.routeName:(context) => EditAdmin(),
+          ManageAdmin.routeName:(context) => ManageAdmin(),
+          TripDetails.routeName:(context) => TripDetails(),
         },
       ),
     );

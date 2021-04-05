@@ -1,13 +1,6 @@
-import 'package:crs_app/main.dart';
-import 'package:crs_app/models/application.dart';
 import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/application_provider.dart';
-import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:crs_app/providers/volunteer_provider.dart';
-import 'package:crs_app/widget/application_for_view_widget.dart';
-import 'package:crs_app/widget/trip_history_widget.dart';
 import 'package:crs_app/widget/trip_widget1.dart';
 import 'package:crs_app/widget/view_history_widget.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +44,6 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
     final applicationProvider = Provider.of<ApplicationProvider>(context);
     final applicationList = applicationProvider.applicationList;
     return Scaffold(
-      backgroundColor: Colors.yellow[100],
       appBar: AppBar(
         title:Text('View History'),
       ),
@@ -61,7 +53,7 @@ class _ViewHistoryPageState extends State<ViewHistoryPage> {
           value: applicationList[i],
           child: Column(
             children: [
-              ViewApplicationWidget(),
+              ViewHistoryWidget(),
               Divider(
                 thickness: 1,
                 color: Colors.black54,

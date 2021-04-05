@@ -1,4 +1,5 @@
 import 'package:crs_app/pages/boarddirectory_home_page.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
+    StaffProvider staffProvider = Provider.of<StaffProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Login Page'),
@@ -80,9 +82,9 @@ class LoginPage extends StatelessWidget {
                     final response = await userProvider.login(
                       usernameController.text,
                       passwordController.text,
-
                     );
                     if(response != null){
+                      final staffResponse = await staffProvider.findStaffByUserID(userProvider.currentUser.id);
                       usernameController.text = '';
                       passwordController.text = '';
                       if(userProvider.currentUser.userType == 'Volunteer'){
@@ -90,12 +92,34 @@ class LoginPage extends StatelessWidget {
                           VolunteerPage.routeName);}
 
                       else if (userProvider.currentUser.userType == 'admin'){
-                        Navigator.pushReplacementNamed(context,
-                            AdminHomePage.routeName);
+                        if(staffResponse != null) {
+                          if (staffResponse.suspend == false) {
+                            Navigator.pushReplacementNamed(context,
+                                AdminHomePage.routeName);
+                          }
+                          else if(staffResponse.suspend == true){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('This account is suspended'),
+                              ),
+                            );
+                          }
+                        }
                       }
                       else if (userProvider.currentUser.userType == 'Manager'){
-                        Navigator.pushReplacementNamed(context,
-                            ManagerPage.routeName);
+                        if(staffResponse != null) {
+                          if (staffResponse.suspend == false) {
+                            Navigator.pushReplacementNamed(context,
+                                ManagerPage.routeName);
+                          }
+                          else if(staffResponse.suspend == true){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('This account is suspended'),
+                              ),
+                            );
+                          }
+                        }
                       }
                       else if(userProvider.currentUser.userType == 'director'){
                         Navigator.pushReplacementNamed(context, BDHomePage.routeName);
