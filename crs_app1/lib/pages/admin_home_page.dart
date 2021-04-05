@@ -5,6 +5,7 @@ import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:crs_app/pages/login_page.dart';
 import 'package:crs_app/pages/trip_page.dart';
 import 'package:crs_app/pages/admin_triplist_page.dart';
+import 'package:crs_app/widget/manager_drawer.dart';
 class AdminHomePage extends StatefulWidget {
   static const String routeName = '/adminHome-Page';
   @override
@@ -37,27 +38,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       appBar: AppBar(
         title: Text('Admin Home Page'),
       ),
-      drawer: Drawer(
-        child: Column(
-          children: [
-            AppBar(
-              title: Text('Hello ${userProvider.currentUser.username}'),
-              automaticallyImplyLeading: false,
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Sign out'),
-              onTap: (){
-                userProvider.currentUser = null;
-                Navigator.of(context).pushReplacementNamed(
-                    LoginPage.routeName
-                );
-              },
-            ),
-          ],
-        ),
-      ),
+        drawer: ManagerDrawer(),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
