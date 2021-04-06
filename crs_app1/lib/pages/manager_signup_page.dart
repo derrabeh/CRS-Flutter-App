@@ -172,6 +172,7 @@ class _ManagerSignUpPageState extends State<ManagerSignUpPage> {
                               content: Text('Sign Up successfully'),
                             ),
                           );
+                          userProvider.getAllManager();
                           Navigator.pop(context);
                         }
                       }

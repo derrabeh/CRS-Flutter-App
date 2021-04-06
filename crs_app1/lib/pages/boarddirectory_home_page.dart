@@ -1,4 +1,7 @@
+import 'package:crs_app/pages/manage_admin.dart';
+import 'package:crs_app/pages/trip_report.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
+import 'package:crs_app/pages/volunteers_report.dart';
 import 'package:crs_app/providers/staff_provider.dart';
 import 'package:crs_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +76,42 @@ class _BDHomePageState extends State<BDHomePage> {
                 child: Text('View Managers'),
                 onPressed: (){
                   Navigator.pushNamed(context, ManagerListPage.routeName);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 50,
+              child: ElevatedButton(
+                child: Text('Generate Volunteers Report'),
+                onPressed: (){
+                  Navigator.pushNamed(context, VolunteerReport.routeName);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 50,
+              child: ElevatedButton(
+                child: Text('Manage CRS Adminstrators'),
+                onPressed: (){
+                  Navigator.pushNamed(context, ManageAdmin.routeName);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 50,
+              child: ElevatedButton(
+                child: Text('Generate Trips Report'),
+                onPressed: (){
+                  Navigator.pushNamed(context, TripReport.routeName);
                 },
               ),
             ),

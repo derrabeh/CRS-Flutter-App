@@ -16,7 +16,6 @@ class AdminWidget extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context);
     final user  = Provider.of<User>(context);
     StaffProvider staffProvider = Provider.of<StaffProvider>(context);
-    staffProvider.findStaffByUserID(user.id);
     return Card(
       key: ValueKey(user.id),
       child: Column(
@@ -80,14 +79,21 @@ class AdminWidget extends StatelessWidget {
                               ),
                               TextButton(
                                 child: Text('Yes'),
-                                onPressed: () {
+                                onPressed: () async{
                                   userProvider.deleteUser(user.id);
+                                  final response =await staffProvider.findStaffByUserID(user.id);
+                                  staffProvider.deleteStaff(response.staffID);
+                                  userProvider.getAllAdmin();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Admin delete'),
+                                    ),
+                                  );
                                   Navigator.pop(context, true);
                                 },
                               ),
                             ],
                           ));
-
                     },
                   )
                 ],

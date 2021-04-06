@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 class UserProvider with ChangeNotifier {
   User currentUser;
+  User loginUser;
   List<User> _userList = [];
 
   List<User> get userList{
@@ -111,7 +112,6 @@ class UserProvider with ChangeNotifier {
   //use in volunteer widget, return new user
   Future<User> getUserById(String uid) async{
     String url = 'https://crs1-ae1ae-default-rtdb.firebaseio.com/users.json';
-    User newUser;
     try{
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -127,14 +127,13 @@ class UserProvider with ChangeNotifier {
             userType: userData['userType'],
           );
           if(newUser.id == uid) {
-            return newUser;
+            currentUser = newUser;
           }
         });
       }
     }catch(error){
       print(error);
     }
-    return newUser;
   }
 
   Future<User> login(String username, String password) async {
@@ -156,6 +155,7 @@ class UserProvider with ChangeNotifier {
               userType: userdata['userType'],
           );
           currentUser = newUser;
+          loginUser = newUser;
         }
       });
     }

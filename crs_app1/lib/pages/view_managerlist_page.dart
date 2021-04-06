@@ -61,9 +61,9 @@ class _ManagerListPageState extends State<ManagerListPage> {
       ),
 
       body: ListView.builder(
-        itemCount: userList.length,
+        itemCount: userProvider.userList.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-          value: userList[i],
+          value: userProvider.userList[i],
           child: Column(
             children: [
               UserWidget(),

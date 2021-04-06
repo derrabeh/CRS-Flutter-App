@@ -42,7 +42,6 @@ class _ViewApplicationPageState extends State<ViewApplicationPage> {
   @override
   Widget build(BuildContext context) {
     final applicationProvider = Provider.of<ApplicationProvider>(context);
-    final applicationList = applicationProvider.applicationList;
     return Scaffold(
       appBar: AppBar(
         title:Text('Application Status'),
@@ -50,7 +49,7 @@ class _ViewApplicationPageState extends State<ViewApplicationPage> {
       body: ListView.builder(
         itemCount: applicationProvider.applicationList.length,
         itemBuilder: (ctx,i) => ChangeNotifierProvider.value(
-          value: applicationList[i],
+          value: applicationProvider.applicationList[i],
           child: Column(
             children: [
               ViewApplicationWidget(),

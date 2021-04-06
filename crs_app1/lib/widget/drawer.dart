@@ -14,7 +14,7 @@ class UserDrawer extends StatelessWidget {
     final vProvider = Provider.of<VolunteerProvider>(context);
     final uProvider = Provider.of<UserProvider>(context);
     //^change to staffProvider later
-    User user = uProvider.currentUser;
+    User user = uProvider.loginUser;
 
     return Drawer(
       child: Column(

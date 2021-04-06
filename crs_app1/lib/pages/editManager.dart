@@ -7,20 +7,25 @@ import 'package:provider/provider.dart';
 import 'package:crs_app/models/user.dart';
 import 'package:flutter/cupertino.dart';
 
-class EditManagerProfilePage extends StatelessWidget {
+class EditManagerProfilePage extends StatefulWidget {
   static const String routeName = '/editManager-Page';
+  @override
+  _EditManagerProfilePageState createState() => _EditManagerProfilePageState();
+}
+
+class _EditManagerProfilePageState extends State<EditManagerProfilePage> {
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     StaffProvider staffProvider = Provider.of<StaffProvider>(context);
-    User newUser = userProvider.currentUser;
-    staffProvider.findStaffByUserID(newUser.id);
-    TextEditingController usernameController = TextEditingController(text:newUser.username);
-    TextEditingController passwordController = TextEditingController(text:newUser.password);
-    TextEditingController nameController = TextEditingController(text:newUser.name);
-    TextEditingController phoneController = TextEditingController(text:newUser.phone);
-    TextEditingController userTypeController = TextEditingController(text:newUser.userType);
-    //TextEditingController addressController = TextEditingController(text:newUser.address);
+    String id = ModalRoute.of(context).settings.arguments;
+    User user = userProvider.findById(id);
+    staffProvider.findStaffByUserID(id);
+    TextEditingController usernameController = TextEditingController(text:user.username);
+    TextEditingController passwordController = TextEditingController(text:user.password);
+    TextEditingController nameController = TextEditingController(text:user.name);
+    TextEditingController phoneController = TextEditingController(text:user.phone);
+    TextEditingController userTypeController = TextEditingController(text:user.userType);
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Manager Profile'),
@@ -94,6 +99,7 @@ class EditManagerProfilePage extends StatelessWidget {
                   labelText: 'userType',
                 ),
                 controller: userTypeController,
+                enabled: false,
               ),
               SizedBox(
                 height: 20,
@@ -119,7 +125,7 @@ class EditManagerProfilePage extends StatelessWidget {
                         //create user object for add user
                         ){
                         User newUser = User(
-                          id: userProvider.currentUser.id,
+                          id: id,
                           username: usernameController.text,
                           password: passwordController.text,
                           name: nameController.text,
@@ -135,6 +141,8 @@ class EditManagerProfilePage extends StatelessWidget {
                             content: Text('Change successfully'),
                           ),
                         );
+                        userProvider.getAllManager();
+                        Navigator.pop(context);
                       }
                       else{
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -156,7 +164,7 @@ class EditManagerProfilePage extends StatelessWidget {
                       padding: EdgeInsets.all(18.0),
                       child: Text(staffProvider.currentStaff.suspend==false? 'Suspend': 'UnSuspend'),
                     ),
-                    onPressed: () async {
+                    onPressed: () async{
                       ScaffoldMessenger.of(context).removeCurrentSnackBar();
                       if(usernameController.text.isNotEmpty &&
                           passwordController.text.isNotEmpty &&
@@ -168,7 +176,7 @@ class EditManagerProfilePage extends StatelessWidget {
                       //create user object for add user
                       ){
                         User newUser = User(
-                          id: userProvider.currentUser.id,
+                          id: id,
                           username: usernameController.text,
                           password: passwordController.text,
                           name: nameController.text,
@@ -209,6 +217,7 @@ class EditManagerProfilePage extends StatelessWidget {
                             ),
                           );
                         }
+                        userProvider.getAllManager();
                         Navigator.pop(context);
                       }
                       else{

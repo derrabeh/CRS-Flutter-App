@@ -159,6 +159,7 @@ class AddAdmin extends StatelessWidget {
                           );
                           //add volunteer
                           staffProvider.addStaff(newAdmin);
+                          userProvider.getAllAdmin();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Add successfully'),

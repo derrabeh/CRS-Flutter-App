@@ -39,23 +39,11 @@ class _EditAdminState extends State<EditAdmin> {
     staffProvider.findStaffByUserID(user.id);
     //final aList = volunteerProvider.adminList;
     //Admin admin = aList.firstWhere((admin) => admin.userId == id);
-
-    TextEditingController usernameController = TextEditingController(
-        text: user.username
-    );
-    TextEditingController passwordController = TextEditingController(
-        text: user.password
-    );
-    TextEditingController nameController = TextEditingController(
-        text: user.name
-    );
-    TextEditingController phoneController = TextEditingController(
-        text: user.phone
-    );
-    TextEditingController userTypeController = TextEditingController(
-        text: user.userType
-    );
-
+    TextEditingController usernameController = TextEditingController(text:user.username);
+    TextEditingController passwordController = TextEditingController(text:user.password);
+    TextEditingController nameController = TextEditingController(text:user.name);
+    TextEditingController phoneController = TextEditingController(text:user.phone);
+    TextEditingController userTypeController = TextEditingController(text:user.userType);
 
     return Scaffold(
       appBar: AppBar(
@@ -155,7 +143,7 @@ class _EditAdminState extends State<EditAdmin> {
                       //create user object for add user
                       ){
                         User newUser = User(
-                          id: userProvider.currentUser.id,
+                          id: id,
                           username: usernameController.text,
                           password: passwordController.text,
                           name: nameController.text,
@@ -171,6 +159,8 @@ class _EditAdminState extends State<EditAdmin> {
                             content: Text('Change successfully'),
                           ),
                         );
+                        userProvider.getAllAdmin();
+                        Navigator.pop(context);
                       }
                       else{
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -204,7 +194,7 @@ class _EditAdminState extends State<EditAdmin> {
                       //create user object for add user
                       ){
                         User newUser = User(
-                          id: user.id,
+                          id: id,
                           username: usernameController.text,
                           password: passwordController.text,
                           name: nameController.text,
@@ -243,6 +233,7 @@ class _EditAdminState extends State<EditAdmin> {
                             ),
                           );
                         }
+                        userProvider.getAllAdmin();
                         Navigator.pop(context);
                       }
                       else{

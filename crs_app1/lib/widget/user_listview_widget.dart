@@ -1,7 +1,9 @@
+import 'package:crs_app/models/staff.dart';
 import 'package:crs_app/models/trip.dart';
 import 'package:crs_app/models/user.dart';
 import 'package:crs_app/pages/editManager.dart';
 import 'package:crs_app/pages/view_managerlist_page.dart';
+import 'package:crs_app/providers/staff_provider.dart';
 import 'package:crs_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:crs_app/pages/trip_detail_page.dart';
@@ -12,8 +14,8 @@ class UserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final staffProvider = Provider.of<StaffProvider>(context);
     final user = Provider.of<User>(context);
-
     return Dismissible(
       background: Container(
         color: Colors.red,
@@ -37,8 +39,16 @@ class UserWidget extends StatelessWidget {
               size: 36,
             ),
             color: Colors.red,
-            onPressed: () {
+            onPressed: () async{
               userProvider.deleteUser(user.id);
+              final response =await staffProvider.findStaffByUserID(user.id);
+              staffProvider.deleteStaff(response.staffID);
+              userProvider.getAllManager();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Manager delete'),
+                ),
+              );
             },
 
           ),
@@ -73,9 +83,17 @@ class UserWidget extends StatelessWidget {
               ],
             ));
       },
-      onDismissed: (direction) {
+      onDismissed: (direction) async{
         if (direction == DismissDirection.endToStart) {
           userProvider.deleteUser(user.id);
+          final response =await staffProvider.findStaffByUserID(user.id);
+          staffProvider.deleteStaff(response.staffID);
+          userProvider.getAllManager();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Manager delete'),
+            ),
+          );
         }
       },
     );

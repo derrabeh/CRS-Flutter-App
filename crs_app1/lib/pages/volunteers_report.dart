@@ -42,7 +42,6 @@ class _VolunteerReportState extends State<VolunteerReport> {
               icon: Icon(Icons.sort),
               onPressed: (){
                 print(userProvider.userList);
-                //sort the volunteers alphabetically
               },
             ),
           ),

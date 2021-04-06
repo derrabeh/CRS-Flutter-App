@@ -41,7 +41,7 @@ class _TripPageState extends State<TripPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('CRS App'),
+        title: Text('All Trip'),
         actions: [
           CircleAvatar(
             radius: 22,

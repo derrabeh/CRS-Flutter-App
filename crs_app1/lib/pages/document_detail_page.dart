@@ -217,6 +217,7 @@ class _ManageDocumentPageState extends State<ManageDocumentPage> {
                               content: Text('Update document successfully'),
                             ),
                           );
+                          documentProvider.getAllDocument(volunteerProvider.currentVolunteer.volunteerId);
                           Navigator.pop(context);
                         },
                       ),

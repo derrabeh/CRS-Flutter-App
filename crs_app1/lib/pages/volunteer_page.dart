@@ -1,5 +1,7 @@
 import 'package:crs_app/pages/application_trip_history_page.dart';
 import 'package:crs_app/pages/application_trip_view_page.dart';
+import 'package:crs_app/providers/application_provider.dart';
+import 'package:crs_app/providers/trip_provider.dart';
 import 'package:crs_app/widget/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +23,21 @@ class _VolunteerPageState extends State<VolunteerPage> {
   void didChangeDependencies() {
     if(isInit){
       final userProvider = Provider.of<UserProvider>(context);
+      final volunteerProvider = Provider.of<VolunteerProvider>(context);
+      final applicationProvider = Provider.of<ApplicationProvider>(context);
       setState(() {
+        Provider.of<ApplicationProvider>(context)
+            .getApplicationForVolunteer(volunteerProvider.currentVolunteer.volunteerId)
+            .then((value) {
+          setState(() {
+          });
+        });
+        Provider.of<TripProvider>(context).clearTripList();
+        if(applicationProvider.applicationList.length>0){
+          applicationProvider.applicationList.forEach((application) {
+            Provider.of<TripProvider>(context).getAllApplicationTrip(application);
+          });
+        }
         Provider.of<VolunteerProvider>(context)
             .getVolunteerById(userProvider.currentUser.id)
             .then((value) {

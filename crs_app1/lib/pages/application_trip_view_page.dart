@@ -49,7 +49,6 @@ class _ApplicationTripViewPageState extends State<ApplicationTripViewPage> {
   @override
   Widget build(BuildContext context) {
     final tripProvider = Provider.of<TripProvider>(context);
-    final tripList = tripProvider.tripList;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -57,9 +56,9 @@ class _ApplicationTripViewPageState extends State<ApplicationTripViewPage> {
       ),
 
       body: ListView.builder(
-        itemCount: tripList.length,
+        itemCount: tripProvider.tripList.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-          value: tripList[i],
+          value: tripProvider.tripList[i],
           child: Column(
             children: [
               ApplicationTripViewWidget(),

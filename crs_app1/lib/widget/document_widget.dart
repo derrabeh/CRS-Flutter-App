@@ -1,3 +1,4 @@
+import 'package:crs_app/providers/volunteer_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _DocumentWidgetState extends State<DocumentWidget> {
   @override
   Widget build(BuildContext context){
     final documentProvider = Provider.of<DocumentProvider>(context);
+    final volunteerProvider = Provider.of<VolunteerProvider>(context);
     final document = Provider.of<Document>(context);
     getImage(context);
     return Dismissible(
@@ -61,6 +63,9 @@ class _DocumentWidgetState extends State<DocumentWidget> {
             color: Colors.red,
             onPressed: (){
               documentProvider.deleteDocument(document.documentID);
+              StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('images/${document.image}');
+              firebaseStorageRef.delete();
+              documentProvider.getAllDocument(volunteerProvider.currentVolunteer.volunteerId);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Document delete'),
@@ -98,6 +103,7 @@ class _DocumentWidgetState extends State<DocumentWidget> {
       onDismissed: (direction){
         if(direction == DismissDirection.endToStart){
           documentProvider.deleteDocument(document.documentID);
+          documentProvider.getAllDocument(volunteerProvider.currentVolunteer.volunteerId);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Document delete'),
